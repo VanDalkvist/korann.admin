@@ -1,4 +1,4 @@
-module.exports = function (app, Todo) {
+module.exports = function (app) {
     var controller = {};
 
     controller.preSearch = [

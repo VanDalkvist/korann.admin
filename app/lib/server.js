@@ -1,5 +1,4 @@
 module.exports = function (app, config) {
-
-    console.log('[express train application listening on %s]', config.port);
-    return app.listen(config.port);
+    console.log('Express train application listening on %s', config.api.port);
+    app.listen(config.api.port);
 }

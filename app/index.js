@@ -1,3 +1,5 @@
-var train = require('express-train');
+var train = require('../core/train');
 
-module.exports = train(__dirname);
+exports.init = function () {
+    train(__dirname);
+}

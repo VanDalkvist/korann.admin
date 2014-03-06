@@ -1,4 +1,4 @@
-module.exports = function (app, User, passportMiddleware) {
+module.exports = function (app, passportMiddleware) {
     return {
         getCurrent: [
             function (req, res, next) {

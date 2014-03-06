@@ -1,17 +1,9 @@
-var hbs = require('express-hbs'),
-    path = require('path');
+var path = require('path');
 
-module.exports = function (app) {
+module.exports = function (app, config) {
 
-    //set up view engine
-    app.set('view engine', 'hbs');
+    app.set('views', path.join(app.set('root'), 'views'));
+    app.set('view engine', 'jade');
 
-    app.engine('hbs', hbs.express3({
-        partialsDir: path.join(__dirname, "../views/partials")
-    }));
-
-    // Static locals
-    app.locals({
-    });
-
+    //app.locals({}); // for global access to variables in application
 };

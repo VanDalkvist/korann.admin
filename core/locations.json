@@ -1,0 +1,28 @@
+{
+    "pkg": {
+        "path": "../package.json"
+    },
+    "config": {
+        "path": "config",
+        "autoinject": true
+    },
+    "views": {
+        "path": "views"
+    },
+    "lib": {
+        "path": "lib",
+        "autoinject": true
+    },
+    "controllers": {
+        "path": "controllers",
+        "autoinject": true,
+        "aggregateOn": "controllers"
+    },
+    "public": {
+        "path": "public"
+    },
+    "middleware": {
+        "path": "middleware",
+        "autoinject": true
+    }
+}

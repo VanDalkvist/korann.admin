@@ -32,7 +32,7 @@ module.exports = function (app) {
             })
         }
     ]
-    controller.read = [
+    controller.get = [
         function (req, res, next) {
             var id = req.params.id;
             req.Model.findById(id, function (err, doc) {
@@ -53,7 +53,7 @@ module.exports = function (app) {
             })
         }
     ]
-    controller.destroy = [
+    controller.delete = [
         function (req, res, next) {
             var id = req.params.id;
             req.Model.findByIdAndRemove(id, function (err, doc) {

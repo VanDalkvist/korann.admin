@@ -8,23 +8,24 @@
     },
     "dependencies": {
         "express": "~3.2.4",
-        "express-train": "~1.0.2",
         "connect-timeout": "0.0.1",
-        "connect-mongo": "~0.3.2",
-        "mongoose": "~3.6.11",
         "async": "~0.2.8",
-        "express-hbs": "~0.2.0",
         "passport": "~0.1.17",
         "passport-local": "~0.1.6",
         "winston": "~0.7.1",
-        "express-trace": "0.0.3"
+        "express-trace": "0.0.3",
+        "nconf": "latest",
+        "jade": "latest",
+        "restler": "latest",
+        "underscore": "latest",
+        "nject": "latest"
     },
     "devDependencies": {
         "mocha": "latest"
     },
-    "main": "./app/index.js",
+    "main": "runner.js",
     "scripts": {
-        "start": "./app/index.js"
+        "start": "runner.js"
     },
     "constants": {
         "title": "structure app",
