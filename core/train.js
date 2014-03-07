@@ -9,47 +9,53 @@ var fs = require('fs');
 var path = require('path');
 var _ = require('underscore');
 var nject = require('nject');
-var locations = require('./locations');
+var map = require('./map');
 
 // #region initialization
 
 function train(dir) {
     catchErrors();
 
-    var app = express();
-
-    app.set('root', dir);
-    app.set('views', path.join(dir, locations.views.path));
-    app.set('public', path.join(dir, locations.public.path));
-
-    //var config = loadConfig(path.join(dir, locations.config.path));
-
     var tree = new nject.Tree();
-    //tree.constant('config', config);
 
-    _.each(_.where(locations, { autoinject: true }), function (location) {
-        traverseAndRegister(path.join(dir, location.path), tree, location.aggregateOn)
+    initConstants(tree, {
+        app: express(),
+        env: {
+            root: dir,
+            locations: map.locations
+        }
     });
 
-    //allow override of app
-    if (!tree.isRegistered('app')) {
-        tree.constant('app', app);
-    }
+    var autoinjectModules = _.where(map, { autoinject: true });
+
+    injectModules(autoinjectModules, dir, tree);
 
     return tree.resolve();
 }
 
 // #region private methods
 
+function initConstants(tree, constants) {
+    _.each(constants, function (value, key) {
+        tree.constant(key, value);
+    });
+}
+
+function injectModules(modulesForInjection, dir, tree) {
+    _.each(modulesForInjection, function (location) {
+        traverseAndRegister(path.join(dir, location.path), tree, location.aggregateOn)
+    });
+}
+
 function traverseAndRegister(p, tree, aggregateOn) {
-    var stat,
-        key = path.basename(p, path.extname(p));
+    var stat;
+    var key = path.basename(p, path.extname(p));
 
     try {
         stat = fs.statSync(p);
     }
     catch (err) {
-        throw new Error('File or directory ' + p + ' could not be found. This is necessary for your application to conform to the express train framework!');
+        throw new Error('File or directory ' + p + ' could not be found!');
     }
 
     if (stat.isDirectory()) {
@@ -60,7 +66,7 @@ function traverseAndRegister(p, tree, aggregateOn) {
         });
     }
     //ignore hidden files
-    else if (key[0] != '.') {
+    else if (key[0] != '.') { // todo: refactor
         var loaded = require(p);
         if (_.isFunction(loaded)) {
             tree.register(key, loaded, {
@@ -79,8 +85,7 @@ function traverseAndRegister(p, tree, aggregateOn) {
 
 function catchErrors() {
     process.on("uncaughtException", function (err) {
-        console.error("Exiting process due to uncaught exception! " + err);
-        console.error(err.stack || err);
+        console.error("Exiting process due to uncaught exception!\n" + err.stack);
         process.exit();
     });
 }

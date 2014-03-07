@@ -1,9 +1,12 @@
 var path = require('path');
 
-module.exports = function (app, config) {
+module.exports = function (app, env) {
 
-    app.set('views', path.join(app.set('root'), 'views'));
+    app.set('views', path.join(env.root, env.locations.views));
     app.set('view engine', 'jade');
 
-    //app.locals({}); // for global access to variables in application
+    app.locals({
+        views: path.join(env.root, env.locations.views),
+        public: path.join(env.root, env.locations.public)
+    });
 };

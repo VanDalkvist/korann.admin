@@ -2,12 +2,13 @@
     "pkg": {
         "path": "../package.json"
     },
+    "locations": {
+        "views": "views",
+        "public": "public"
+    },
     "config": {
         "path": "config",
         "autoinject": true
-    },
-    "views": {
-        "path": "views"
     },
     "lib": {
         "path": "lib",
@@ -17,9 +18,6 @@
         "path": "controllers",
         "autoinject": true,
         "aggregateOn": "controllers"
-    },
-    "public": {
-        "path": "public"
     },
     "middleware": {
         "path": "middleware",
