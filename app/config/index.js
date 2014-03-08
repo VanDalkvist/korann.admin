@@ -7,10 +7,7 @@ nconf.argv()
 
 // #region private functions
 
-var settings = {
-    api: nconf.get('api'),
-    server: nconf.get('server')
-};
+var settings = nconf.get();
 
 // #region exports
 

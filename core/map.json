@@ -1,26 +1,27 @@
 {
-    "pkg": {
-        "path": "../package.json"
-    },
     "locations": {
         "views": "views",
         "public": "public"
     },
     "config": {
         "path": "config",
-        "autoinject": true
+        "autoinject": true,
+        "type": "single"
     },
     "lib": {
         "path": "lib",
-        "autoinject": true
+        "autoinject": true,
+        "type": "all"
     },
     "controllers": {
         "path": "controllers",
         "autoinject": true,
-        "aggregateOn": "controllers"
+        "aggregateOn": "controllers",
+        "type": "all"
     },
     "middleware": {
         "path": "middleware",
-        "autoinject": true
+        "autoinject": true,
+        "type": "all"
     }
 }

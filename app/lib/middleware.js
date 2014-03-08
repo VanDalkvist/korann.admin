@@ -35,7 +35,7 @@ module.exports = function (app, config, passportMiddleware, RestClient) {
     app.use(passportMiddleware.setLocals);
     app.use(app.router);                                                // routes in lib/routes.js
 
-    var authConfig = config.server.appAuth;
+    var authConfig = config.auth.app;
 
     // todo: read login and password from config;
 
