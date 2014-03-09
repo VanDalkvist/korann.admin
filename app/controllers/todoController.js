@@ -18,10 +18,9 @@ module.exports = function (app) {
     ]
     controller.preUpdate = [
         function (req, res, next) {
-            //try to find a todo that matches the ID in the uri and belongs to the user who is logged i
             Todo.find({_id: req.params.id, userId: req.user.id}, function (err, results) {
                 if (err) return next(err);
-                if (!results) return res.send(401); //trying to update a todo that isn't yours?!?!?!
+                if (!results) return res.send(401);
                 req.Model = Todo;
                 next();
             });
@@ -29,10 +28,9 @@ module.exports = function (app) {
     ]
     controller.preDestroy = [
         function (req, res, next) {
-            //try to find a todo that matches the ID in the uri and belongs to the user who is logged in
             Todo.find({_id: req.params.id, userId: req.user.id}, function (err, results) {
                 if (err) return next(err);
-                if (!results) return res.send(401); //trying to update a todo that isn't yours?!?!?!
+                if (!results) return res.send(401);
                 req.Model = Todo;
                 next();
             });

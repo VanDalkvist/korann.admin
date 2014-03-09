@@ -48,7 +48,6 @@ function TodosCtrl($scope, $http, Todo) {
 
     $scope.newTodo = {};
 
-    //function to create a new Todo object
     $scope.createTodo = function (todo) {
         if ($scope.newTodoForm.$invalid) {
             return;
@@ -65,7 +64,6 @@ function TodosCtrl($scope, $http, Todo) {
             });
     }
 
-    //we'll call this function when the checkbox of a todo is checked
     $scope.markComplete = function (todo) {
         todo.$save({id: todo._id});
     }
