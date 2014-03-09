@@ -1,7 +1,13 @@
 {
     "locations": {
         "views": "views",
-        "public": "public"
+        "public": "public",
+        "logs": "logs"
+    },
+    "log": {
+        "path": "log",
+        "autoinject": true,
+        "type": "single"
     },
     "config": {
         "path": "config",

@@ -3,7 +3,7 @@ var LocalStrategy = require('passport-local').Strategy;
 
 var BAD_LOGIN_STRING = 'Invalid username or password';
 
-module.exports = function (app) {
+module.exports = function (app, storage) {
     var strategy = new LocalStrategy(verifyUser);
 
     function verifyUser(username, password, done) {

@@ -1,6 +1,6 @@
 {
     "api": {
-        "port": 3003,
+        "port": 4003,
         "cookie": {
             "secret": "boggle at the situation"
         },
@@ -17,8 +17,8 @@
     },
     "auth": {
         "user": {
-            "loginUrl": "/user/auth",
-            "logoutUrl": "/user/auth"
+            "loginUrl": "/user/login",
+            "logoutUrl": "/user/logout"
         },
         "app": {
             "url": "/app/auth",

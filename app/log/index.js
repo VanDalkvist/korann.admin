@@ -5,9 +5,13 @@ var path = require('path');
 
 // #region initialization
 
-var ENV = process.env.NODE_ENV;
-
 // #region private functions
+
+// todo: add exceptions log file
+//winston.handleExceptions(
+//    new winston.transports.File({
+//        filename: '/exceptions.log' }
+//    ));
 
 function getLogger(module) {
     var localPath = module.filename.split(path.sep).slice(-2).join('/');
@@ -19,7 +23,8 @@ function getConfig(path) {
         transports: [
             new winston.transports.Console({
                 colorize: true,
-                level: ENV == 'development' ? 'debug' : 'error',
+                level: 'debug',
+                timestamp: true,
                 label: path
             })
         ]

@@ -3,20 +3,9 @@ var connect_timeout = require('connect-timeout');
 
 // Middleware
 
-module.exports = function (app, config, passportMiddleware, RestClient) {
+module.exports = function (app, config, passportMiddleware, RestClient, storage) {
 
-    // Sessions
-
-    // todo: separate api config and server config
-    var memoryStore = new express.session.MemoryStore();
-
-    var session_middleware = express.session({
-        key: config.api.session.key,
-        secret: config.api.session.secret,
-        store: memoryStore
-    });
-    // todo: save app session to somewhere
-
+    // todo: add adequate error handler
     // Error handler
     var error_middleware = express.errorHandler({
         dumpExceptions: true,
@@ -26,24 +15,21 @@ module.exports = function (app, config, passportMiddleware, RestClient) {
     // Middleware stack for all requests
     app.use(express['static'](app.locals.public));                      // static files in /public
     app.use(connect_timeout({ time: config.api.request_timeout }));     // request timeouts
+    app.use(express.favicon());
     app.use(express.cookieParser());                                    // req.cookies
-    app.use(session_middleware);                                        // req.session
+//    app.use(session_middleware);                                        // req.session
+    app.use(express.json());
     app.use(express.bodyParser());                                      // req.body & req.files
     app.use(express.methodOverride());                                  // '_method' property in body (POST -> DELETE / PUT)
-    app.use(passportMiddleware.initialize());
-    app.use(passportMiddleware.session());
-    app.use(passportMiddleware.setLocals);
+//    app.use(passportMiddleware.initialize());
+//    app.use(passportMiddleware.session());
+//    app.use(passportMiddleware.setLocals);
     app.use(app.router);                                                // routes in lib/routes.js
 
     var authConfig = config.auth.app;
 
-    // todo: read login and password from config;
-
-    var client = new RestClient();
-    client.authorizeApp(authConfig.appId, authConfig.appSecret).on('complete', function (data) {
-        // todo: save session info;
-        console.log(data);
-    });
+    var client = new RestClient(storage);
+    client.authorizeApp(authConfig.appId, authConfig.appSecret);
 
     // Handle errors thrown from middleware/routes
     app.use(error_middleware);
