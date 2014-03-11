@@ -1,0 +1,8 @@
+{
+    "Complete": "complete",
+    "Success": "success",
+    "Fail": "fail",
+    "Error": "error",
+    "Abort": "abort",
+    "Timeout": "timeout"
+}

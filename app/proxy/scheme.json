@@ -1,0 +1,7 @@
+{
+    "product": "/api/products",
+    "category": "/api/categories",
+    "UserLogin": "/user/login",
+    "UserLogout": "/user/logout",
+    "AppAuth": "/app/auth"
+}

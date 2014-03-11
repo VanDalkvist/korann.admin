@@ -37,7 +37,7 @@ function _getSession(id) {
     if (storage.userSessions[id])
         return storage.userSessions[id];
 
-    throw new Error("Session " + id + " doesn't exist.");
+    throw new Error("Session '" + id + "' doesn't exist.");
 }
 
 function _saveAppToken(token) {

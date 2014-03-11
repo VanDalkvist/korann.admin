@@ -3,7 +3,7 @@ var connect_timeout = require('connect-timeout');
 
 // Middleware
 
-module.exports = function (app, config, passportMiddleware, RestClient, storage) {
+module.exports = function (app, config, RestClient, storage) {
 
     // todo: add adequate error handler
     // Error handler
@@ -17,19 +17,15 @@ module.exports = function (app, config, passportMiddleware, RestClient, storage)
     app.use(connect_timeout({ time: config.api.request_timeout }));     // request timeouts
     app.use(express.favicon());
     app.use(express.cookieParser());                                    // req.cookies
-//    app.use(session_middleware);                                        // req.session
     app.use(express.json());
     app.use(express.bodyParser());                                      // req.body & req.files
     app.use(express.methodOverride());                                  // '_method' property in body (POST -> DELETE / PUT)
-//    app.use(passportMiddleware.initialize());
-//    app.use(passportMiddleware.session());
-//    app.use(passportMiddleware.setLocals);
     app.use(app.router);                                                // routes in lib/routes.js
 
-    var authConfig = config.auth.app;
+    var authConfig = config.auth;
 
-    var client = new RestClient(storage);
-    client.authorizeApp(authConfig.appId, authConfig.appSecret);
+    var client = new RestClient(authConfig.appId, authConfig.appSecret, storage);
+    client.authorizeApp();
 
     // Handle errors thrown from middleware/routes
     app.use(error_middleware);

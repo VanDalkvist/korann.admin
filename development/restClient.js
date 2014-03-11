@@ -6,8 +6,11 @@
 
 var config = require('./config');
 var log = require('../app/log');
-var RestClient = require('../app/middleware/RestClient')(config, log);
-var storage = require('../app/middleware/storage');
+var events = require('../app/proxy/events');
+var scheme = require('../app/proxy/scheme');
+var rest = require('../app/proxy/RestClient');
+var RestClient = rest(config, log, events, scheme);
+var storage = require('../app/proxy/storage');
 var logger = log.getLogger(module);
 
 // #region initialization
