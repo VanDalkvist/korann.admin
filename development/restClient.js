@@ -8,17 +8,17 @@ var config = require('./config');
 var log = require('../app/log');
 var events = require('../app/proxy/events');
 var scheme = require('../app/proxy/scheme');
-var rest = require('../app/proxy/RestClient');
-var RestClient = rest(config, log, events, scheme);
+var proxy = require('../app/proxy/proxy');
+var proxyClient = proxy(config, log, events, scheme);
 var storage = require('../app/proxy/storage');
 var logger = log.getLogger(module);
 
 // #region initialization
 
 function init(done) {
-    var appAuthConfig = config.auth.app;
+    var appAuthConfig = config.auth;
 
-    var client = new RestClient(appAuthConfig.appId, appAuthConfig.appSecret, storage);
+    var client = new proxyClient(appAuthConfig.appId, appAuthConfig.appSecret, storage);
 
     (function (next) {
         client.authorizeApp(function (err, data) {
@@ -51,7 +51,6 @@ function init(done) {
 }
 
 // #region private methods
-
 
 // #region exports
 
