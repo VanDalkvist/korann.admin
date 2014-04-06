@@ -1,39 +1,42 @@
 (function () {
     'use strict';
 
-    // services Module
-    angular.module('korann.user', [])
-        .service('userService', ['$http', function ($http) {
+    angular.module('korann.user', ['korann.cache'])
+        .service('userService', ['$http', '$location', 'cache',
+            function ($http, $location, cache) {
 
-            // #region initialization
+                // #region initialization
 
-            return {
-                get: _get,
-                login: _login,
-                logout: _logout
-            };
+                return {
+                    current: _get,
+                    login: _login,
+                    logout: _logout
+                };
 
-            // #region private functions
+                // #region private functions
 
-            function _get() {
-                var url = '/user';
+                function _get() {
+                    var user = cache.get("user");
 
-                // todo: fill headers
-                return $http.get(url);
-            }
+                    if (user) return user;
 
-            function _login(login, password) {
-                var url = '/user/login';
+                    // todo: get cookie session and verify
 
-                // todo: save data to session storage
-                return $http.post(url, { login: login, password: password });
-            }
+                    $location.path("/login");
+                }
 
-            function _logout() {
-                var url = '/user/logout';
+                function _login(login, password) {
+                    var url = '/user/login';
 
-                // todo: delete data from session storage
-                return $http.post(url, {});
-            }
-        }]);
+                    return $http.post(url, { login: login, password: password }).then(function (res) {
+                        cache.put("user", res);
+                        return res;
+                    });
+                }
+
+                function _logout() {
+                    var url = '/user/logout';
+                    return $http.post(url, {});
+                }
+            }]);
 })();

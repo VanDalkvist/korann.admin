@@ -6,6 +6,7 @@
         "bootstrap": "latest",
         "angular-resource": "latest",
         "angular-route": "latest",
+        "angular-cookies": "latest",
         "underscore": "latest"
     },
     "devDependencies": {

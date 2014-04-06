@@ -1,7 +1,7 @@
 (function () {
     'use strict';
 
-    angular.module('korann.config.interceptors')
+    angular.module('korann.config.auth')
         .config(['$httpProvider', function ($httpProvider) {
             /*
              Set up an interceptor to watch for 401 errors.

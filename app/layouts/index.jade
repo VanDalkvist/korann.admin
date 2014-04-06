@@ -10,15 +10,12 @@ body
     div.container
         div.navbar.navbar-inverse
             div.navbar-inner
-                a.brand(ng-href='/') Angular Express Train
-                ul.nav
-                    li
-                        a(ng-href="/todos", ng-show="user.username") My Todos
+                a.brand(ng-href='/') KoraNN.Admin
                 ul.nav.pull-right
-                    li(ng-hide="user.username")
+                    li(ng-if="!user.username")
                         a(ng-href="/login") Login
-                    li.dropdown(ng-show="user.username")
-                        a.dropdown-toggle(href="#", data-toggle="dropdown") Hello, {{user.username}}
+                    li.dropdown(ng-if="user.username")
+                        a.dropdown-toggle(href="/", toggle="dropdown") Hello, {{user.username}}
                             b.caret
                         ul.dropdown-menu
                             li
@@ -31,10 +28,14 @@ body
     script(src="/js/references/angular/angular.js")
     script(src="/js/references/angular-resource/angular-resource.js")
     script(src="/js/references/angular-route/angular-route.js")
+    script(src="/js/references/angular-cookies/angular-cookies.js")
     script(src="/js/app/app.js")
     script(src="/js/app/config/init.config.js")
-    script(src="/js/app/config/interceptor.config.js")
+    script(src="/js/app/config/auth.config.js")
+    script(src="/js/app/config/http.config.js")
     script(src="/js/app/config/route.config.js")
+    script(src="/js/app/config/cache.config.js")
+    script(src="/js/app/modules/cache.module.js")
     script(src="/js/app/services/services.user.js")
     script(src="/js/app/controllers/controllers.index.js")
     script(src="/js/app/controllers/controllers.login.js")

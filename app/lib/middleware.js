@@ -3,13 +3,9 @@ var trace = require('express-trace');
 var connect_timeout = require('connect-timeout');
 var path = require('path');
 
-// Middleware
+// Middleware stack for all requests
 
 module.exports = function (app, config, proxy, storage, userController, ProxyClient) {
-
-    // todo: add adequate error handler
-
-    // Middleware stack for all requests
 
     app.use(express.static(app.locals.public));
     app.use(connect_timeout({ time: config.api.request_timeout }));     // request timeouts
@@ -19,17 +15,17 @@ module.exports = function (app, config, proxy, storage, userController, ProxyCli
     app.use(express.bodyParser());                                      // req.body & req.files
     app.use(express.methodOverride());                                  // '_method' property in body (POST -> DELETE / PUT)
     app.use(app.router);
-    app.use(express.errorHandler({ dumpExceptions: true, showStack: true }));
 
+    // Errors
     app.configure('development', function () {
         trace(app);
     });
+    app.use(_errorHandler);
 
     app.get('/', _renderIndex);
     app.get('/partials/:name', _renderView);
 
-    //User
-    app.get('/user', userController.get);
+//    app.get('/user', userController.get);
     app.post('/user/login', userController.login);
     app.post('/user/logout', _ensureAuthenticated, userController.logout);
 
@@ -58,8 +54,6 @@ module.exports = function (app, config, proxy, storage, userController, ProxyCli
         return next(req, res);
     }
 
-    // #region private functions
-
     function _renderIndex(req, res) {
         res.render('index');
     }
@@ -69,5 +63,8 @@ module.exports = function (app, config, proxy, storage, userController, ProxyCli
         res.render(path.join(app.locals.views, name));
     }
 
-    // Handle errors thrown from middleware/routes
+    function _errorHandler(err, req, res, next) {
+        res.status(err.code || 500);
+        res.send({ error: err });
+    }
 };

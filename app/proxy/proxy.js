@@ -19,6 +19,7 @@ function init(config, log, events, scheme) {
 
     var actions = {
         authorizeApp: _authorizeApp,
+        current: _currentSession,
         userLogin: _userLogin,
         userLogout: _userLogout,
         create: _create,
@@ -74,6 +75,10 @@ function init(config, log, events, scheme) {
             logger.debug("User login session ", result, " was saved in storage.");
             if (done) done(null, result);
         }
+    }
+
+    function _currentSession(username, token, done) {
+
     }
 
     function _userLogout(session, done) {
@@ -161,10 +166,10 @@ function init(config, log, events, scheme) {
     }
 
     function _getFailCallback(callback) {
-        return function failCallback(err) {
-            logger.error(err);
+        return function failCallback(res) {
+            logger.error(res.error);
 
-            if (callback) callback(err);
+            if (callback) callback(res.error);
         }
     }
 }
