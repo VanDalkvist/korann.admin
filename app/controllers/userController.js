@@ -1,68 +1,28 @@
-module.exports = function (app) {
+module.exports = function (ProxyClient, log) {
+    var logger = log.getLogger(module);
+
     return {
-        getCurrent: [
+        get: [
             function (req, res, next) {
+                // todo: add validation
                 if (!req.user) {
                     res.send(400);
                 }
-                else {
-                    User.findOne({_id: req.user.id}, function (err, results) {
-                        if (err) return next(err);
-                        if (results) {
-                            console.log({username: results.username});
-                            res.send({username: results.username});
-                        }
-                        else {
-                            res.send(400);
-                        }
-                    });
-                }
             }],
-
-        authenticate: [
+        login: [
             function (req, res, next) {
-                passportMiddleware.authenticate('local', function (err, user, info) {
-                    if (err) return next(err);
-                    if (!user) {
-                        return res.send('Invalid username or password.', 400);
-                    }
-                    req.logIn(user, function (err) {
-                        if (err) return next(err);
-                        return res.send('Ok', 200);
-                    });
-                })(req, res, next);
-            }],
+                var loginInfo = req.body;
+                ProxyClient.Instance().userLogin(loginInfo.login, loginInfo.password, function (err, result) {
+                    if (err) throw err;
 
-        create: [
-            function (req, res, next) {
-                var user = new User(req.body);
-                User.findOne({username: user.username}, function (err, results) {
-                    if (err) return next(err);
-                    if (results) {
-                        res.send('A user with this username already exists.', 400);
-                    }
-                    else {
-                        user.save(function (err, results) {
-                            if (err) return next(err);
-                            req.logIn(user, function () {
-                                res.send('ok', 200)
-                            });
-                        });
-                    }
-                })
+                    logger.log("User '" + loginInfo.login + "' successfully log in.");
+                    res.cookie('session', result.token, { maxAge: 900000, httpOnly: true });
+                    res.send(200, { username: result.user });
+                });
             }],
-        //logout/kill session
-        kill: [
+        logout: [
             function (req, res) {
-                if (req.session) {
-                    req.session.destroy(function () {
-                        res.send('ok', 200)
-                    });
-                }
-                else {
-                    res.send('ok', 200)
-                }
+
             }]
     };
 };
-

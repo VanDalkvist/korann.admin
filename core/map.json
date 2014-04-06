@@ -1,5 +1,6 @@
 {
     "locations": {
+        "layouts": "layouts",
         "views": "views",
         "public": "public",
         "logs": "logs"

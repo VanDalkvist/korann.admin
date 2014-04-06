@@ -21,7 +21,7 @@ module.exports = {
     getSession: _getSession,
     saveAppToken: _saveAppToken,
     getAppToken: _getAppToken
-}
+};
 
 // #region private methods
 

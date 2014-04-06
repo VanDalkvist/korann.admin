@@ -1,14 +1,7 @@
 {
     "api": {
         "port": 3003,
-        "cookie": {
-            "secret": "boggle at the situation"
-        },
-        "session": {
-            "key": "boggle at the situation",
-            "secret": "boggle at the situation"
-        },
-        "request_timeout": 1000,
+        "request_timeout": 100000,
         "character_encoding": "utf-8"
     },
     "server": {

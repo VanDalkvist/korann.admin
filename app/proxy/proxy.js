@@ -20,6 +20,7 @@ function init(config, log, events, scheme) {
     var actions = {
         authorizeApp: _authorizeApp,
         userLogin: _userLogin,
+        userLogout: _userLogout,
         create: _create,
         update: _update,
         remove: _remove,
@@ -33,7 +34,7 @@ function init(config, log, events, scheme) {
     // #region private methods
 
     /*
-     *  Calls when proxyClient instance have create.
+     *  Calls when proxy client instance have create.
      */
     function _constructor(appId, appSecret, storage) {
         this.defaults.appId = appId;
@@ -71,7 +72,21 @@ function init(config, log, events, scheme) {
         function successCallback(result) {
             instance.defaults.storage.addSession(result.name, result);
             logger.debug("User login session ", result, " was saved in storage.");
+            if (done) done(null, result);
+        }
+    }
 
+    function _userLogout(session, done) {
+        var options = { data: {
+            appId: instance.defaults.appId,
+            token: instance.defaults.storage.getAppToken()
+        }};
+
+        sendRequest('post', 'UserLogout', options, successCallback, done);
+
+        function successCallback(result) {
+            instance.defaults.storage.removeSession(result.name);
+            logger.debug("User login session ", result, " was saved in storage.");
             if (done) done(null, result);
         }
     }

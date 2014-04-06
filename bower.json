@@ -1,0 +1,13 @@
+{
+    "name": "korann-admin",
+    "version": "1.0.0",
+    "dependencies": {
+        "angular": "latest",
+        "bootstrap": "latest",
+        "angular-resource": "latest",
+        "angular-route": "latest",
+        "underscore": "latest"
+    },
+    "devDependencies": {
+    }
+}
