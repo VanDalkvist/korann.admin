@@ -33,7 +33,7 @@ function init(config, log, events, scheme) {
     // #region private methods
 
     /*
-     *  Calls when RestClient instance have create.
+     *  Calls when proxyClient instance have create.
      */
     function _constructor(appId, appSecret, storage) {
         this.defaults.appId = appId;

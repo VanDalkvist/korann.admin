@@ -1,10 +1,12 @@
 module.exports = function (app) {
     var controller = {};
 
+    var client = app.locals.client;
+
     /*
      Generic CRUD functions for any model
      */
-    controller.search = [
+    controller.get = [
         /*
          route functions get 3 args - the request object, the response object, and next - a callback to move on
          to the next middleware.
@@ -15,30 +17,24 @@ module.exports = function (app) {
         function (req, res, next) {
             console.log('starting api.search');
             var query = req.query;
-            //req.Model is a value I set in libs/params.js
-            req.Model.find(query, function (err, docs) {
+
+            client.read(req.params.model, query, function (err, data) {
                 if (err) return next(err);
-                return res.json(docs);
+
+                return res.json(data);
             });
         }
     ]
     controller.create = [
         function (req, res, next) {
-            console.log(req.body);
-            var model = new req.Model(req.body);
-            model.save(function (err, doc) {
+            var model = req.body;
+
+            console.log(model);
+
+            client.create(req.params.model, model, function (err, data) {
                 if (err) return next(err);
-                return res.json(doc);
-            })
-        }
-    ]
-    controller.get = [
-        function (req, res, next) {
-            var id = req.params.id;
-            req.Model.findById(id, function (err, doc) {
-                if (err) return next(err);
-                if (doc === null) return res.send(404);
-                return res.json(doc);
+
+                return res.json(data);
             });
         }
     ]

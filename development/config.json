@@ -16,14 +16,8 @@
         "port": 3001
     },
     "auth": {
-        "user": {
-            "loginUrl": "/user/login",
-            "logoutUrl": "/user/logout"
-        },
-        "app": {
-            "url": "/app/auth",
-            "appId": "697b8bf0-9727-11e3-8ad5-b943a162fa1a",
-            "appSecret": "8E6/4CHmQHXaqZR/MFJPfQNRW970ABisdILNC02FaqsloLBxOiTmRsh+T7wixqI9mfPsZGENvzZq9xSvzBNeTA=="
-        }
+        "url": "/app/auth",
+        "appId": "697b8bf0-9727-11e3-8ad5-b943a162fa1a",
+        "appSecret": "8E6/4CHmQHXaqZR/MFJPfQNRW970ABisdILNC02FaqsloLBxOiTmRsh+T7wixqI9mfPsZGENvzZq9xSvzBNeTA=="
     }
 }
