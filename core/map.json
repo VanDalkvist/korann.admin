@@ -25,6 +25,12 @@
         "autoinject": true,
         "type": "all"
     },
+    "errors": {
+        "path": "errors",
+        "autoinject": true,
+        "aggregateOn": "errors",
+        "type": "all"
+    },
     "controllers": {
         "path": "controllers",
         "autoinject": true,

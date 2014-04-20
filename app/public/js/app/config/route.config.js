@@ -6,8 +6,8 @@
 
             //The routes that our angular app will handle
             $routeProvider
-                .when('/', { templateUrl: '/partials/index.html', controller: 'IndexCtrl' })
-                .when('/login', { templateUrl: '/partials/login.html', controller: 'LoginCtrl' })
+                .when('/', { templateUrl: '/views/index.html', controller: 'IndexCtrl' })
+                .when('/login', { templateUrl: '/views/shared/login.html', controller: 'LoginCtrl' })
                 .otherwise({ redirectTo: '/' });
 
             //turn on Html5 history mode

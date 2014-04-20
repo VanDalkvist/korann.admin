@@ -1,2 +1,17 @@
+.brand-korann {
+    padding-top: 15px !important;
+}
 
+.user-panel {
+    padding: 10px 15px 10px 5px;
+    color: #999;
+    vertical-align: middle;
+}
 
+.logout-btn {
+    margin-top: 0px !important;
+}
+
+.login-btn {
+    padding: 5px !important;
+}

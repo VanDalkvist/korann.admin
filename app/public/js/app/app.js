@@ -7,14 +7,4 @@
     ]);
 
     window.app = app;
-
-    app.run(['$rootScope', 'userService', function ($rootScope, userService) {
-        var savedUser = userService.current();
-
-        if (!savedUser) return;
-
-        $rootScope.user = {
-            username: savedUser.username
-        };
-    }]);
 })();

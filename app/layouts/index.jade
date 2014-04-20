@@ -6,20 +6,20 @@ html(ng-app="korann.admin")
         link(rel='stylesheet', href='/css/style.css')
         link(rel='stylesheet', href='/css/bootstrap.min.css')
         base(href="/")
-body
+body(ng-controller="MainCtrl")
     div.container
-        div.navbar.navbar-inverse
+        div.navbar.navbar-inverse.nav-justified
             div.navbar-inner
-                a.brand(ng-href='/') KoraNN.Admin
-                ul.nav.pull-right
+                a.brand.brand-korann(ng-href='/') KoraNN.Admin
+                ul.nav.pull-right.user-panel
                     li(ng-if="!user.username")
-                        a(ng-href="/login") Login
-                    li.dropdown(ng-if="user.username")
-                        a.dropdown-toggle(href="/", toggle="dropdown") Hello, {{user.username}}
-                            b.caret
-                        ul.dropdown-menu
+                        a.login-btn(ng-href="/login") Login
+                    li(ng-if="user.username")
+                        ul.inline
                             li
-                                a(ng-click="logout()") Log Out
+                                label Hello, {{user.username}}
+                            li
+                                button.btn.btn-default.logout-btn(ng-click="logout()") Log Out
 
     div.container(ng-view)
 
@@ -29,6 +29,7 @@ body
     script(src="/js/references/angular-resource/angular-resource.js")
     script(src="/js/references/angular-route/angular-route.js")
     script(src="/js/references/angular-cookies/angular-cookies.js")
+
     script(src="/js/app/app.js")
     script(src="/js/app/config/init.config.js")
     script(src="/js/app/config/auth.config.js")
@@ -36,6 +37,7 @@ body
     script(src="/js/app/config/route.config.js")
     script(src="/js/app/config/cache.config.js")
     script(src="/js/app/modules/cache.module.js")
-    script(src="/js/app/services/services.user.js")
-    script(src="/js/app/controllers/controllers.index.js")
-    script(src="/js/app/controllers/controllers.login.js")
+    script(src="/js/app/services/user.svc.js")
+    script(src="/js/app/controllers/index.ctrl.js")
+    script(src="/js/app/controllers/login.ctrl.js")
+    script(src="/js/app/controllers/main.ctrl.js")

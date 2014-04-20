@@ -8,6 +8,7 @@ module.exports = function (app, env) {
 
     app.locals({
         public: path.join(env.root, env.locations.public),
-        views: path.join(env.root, env.locations.public, env.locations.views)
+        views: path.join(env.root, env.locations.public, env.locations.views),
+        shared: path.join(env.root, env.locations.public, env.locations.views, 'shared')
     });
 };

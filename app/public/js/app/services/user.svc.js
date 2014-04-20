@@ -20,8 +20,6 @@
 
                     if (user) return user;
 
-                    // todo: get cookie session and verify
-
                     $location.path("/login");
                 }
 
@@ -36,7 +34,9 @@
 
                 function _logout() {
                     var url = '/user/logout';
-                    return $http.post(url, {});
+                    return $http.post(url, {}).then(function () {
+                        cache.remove("user");
+                    });
                 }
             }]);
 })();

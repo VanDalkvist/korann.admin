@@ -5,32 +5,31 @@ var path = require('path');
 
 // Middleware stack for all requests
 
-module.exports = function (app, config, proxy, storage, userController, ProxyClient) {
+module.exports = function (app, config, proxy, storage, controllers, ProxyClient) {
 
     app.use(express.static(app.locals.public));
     app.use(connect_timeout({ time: config.api.request_timeout }));     // request timeouts
     app.use(express.favicon());
     app.use(express.json());
-    app.use(express.cookieParser());                                    // req.cookies
+    // todo: write cookie parser which set cookie secret as app session token
+    app.use(express.cookieParser(config.seance.cookieSecret));                                    // req.cookies and req.signedCookies
     app.use(express.bodyParser());                                      // req.body & req.files
     app.use(express.methodOverride());                                  // '_method' property in body (POST -> DELETE / PUT)
     app.use(app.router);
 
     // Errors
-    app.configure('development', function () {
-        trace(app);
-    });
+    trace(app);
     app.use(_errorHandler);
 
-    app.get('/', _renderIndex);
-    app.get('/partials/:name', _renderView);
+    app.get('/', controllers.viewController.index);
+    app.get('/login', controllers.viewController.index);
 
-//    app.get('/user', userController.get);
-    app.post('/user/login', userController.login);
-    app.post('/user/logout', _ensureAuthenticated, userController.logout);
+    app.post('/user/login', controllers.userController.login);
+    app.post('/user/logout', controllers.userController.isAuthenticated, controllers.userController.logout);
 
-    // redirect all others to the index (HTML5 history)
-    app.get('*', _renderIndex);
+    app.get('/views/shared/:name', controllers.viewController.view(app.locals.shared));
+
+    app.get('/views/:name', controllers.userController.isAuthenticated, controllers.viewController.view(app.locals.views));
 
     //whenever a router parameter :model is matched, this is run
     app.param('model', function (req, res, next, model) {
@@ -44,26 +43,17 @@ module.exports = function (app, config, proxy, storage, userController, ProxyCli
 //        return next();
     });
 
+    // redirect all others to the index (HTML5 history)
+    app.get('*', controllers.userController.isAuthenticated, controllers.viewController.index);
+
     ProxyClient.init(proxy, config, storage);
 
     // #region private functions
 
-    function _ensureAuthenticated(req, res, next) {
-        if (!req.cookies.session) res.send(401);
-
-        return next(req, res);
-    }
-
-    function _renderIndex(req, res) {
-        res.render('index');
-    }
-
-    function _renderView(req, res) {
-        var name = req.params.name;
-        res.render(path.join(app.locals.views, name));
-    }
-
     function _errorHandler(err, req, res, next) {
+        if (err.code === 401)
+            res.clearCookie("session");
+
         res.status(err.code || 500);
         res.send({ error: err });
     }

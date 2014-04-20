@@ -32,11 +32,5 @@
                         $scope.model.error = error.message;
                     });
             }
-
-            function _logout() {
-                userService.logout().then(function (result) {
-                    console.log("Logout successful!");
-                });
-            }
         }]);
 })(app);

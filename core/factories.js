@@ -29,9 +29,10 @@ function injectSingleModule(p, tree, aggregateOn) {
     var module = require(p);
 
     var options = { identifier: key, aggregateOn: aggregateOn };
+
     _.isFunction(module)
-        ? tree.register(key, module, options)
-        : tree.constant(module.ModuleName || key, module);
+        ? tree.register(module.ModuleName || key, module, options)
+        : tree.constant(module.ModuleName || key, module, options);
 }
 
 function injectFolderModules(p, tree, aggregateOn) {

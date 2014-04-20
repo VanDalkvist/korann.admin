@@ -7,8 +7,7 @@
 var rest = require('restler');
 var _ = require('underscore');
 
-function init(config, log, events, scheme) {
-
+module.exports = function init(config, log, events, scheme, errors) {
     // #region initialization
 
     var logger = log.getLogger(module);
@@ -19,9 +18,9 @@ function init(config, log, events, scheme) {
 
     var actions = {
         authorizeApp: _authorizeApp,
-        current: _currentSession,
         userLogin: _userLogin,
         userLogout: _userLogout,
+        isExistSession: _isExistSession,
         create: _create,
         update: _update,
         remove: _remove,
@@ -53,6 +52,8 @@ function init(config, log, events, scheme) {
 
         function successCallback(data) {
             instance.defaults.storage.saveAppToken(data.token);
+            if (data.sessions && data.sessions.length)
+                instance.defaults.storage.init(data.sessions, "_id", "context");
             logger.debug("Access token for application {" + instance.defaults.appId + "} was saved in storage.");
 
             if (done) done(null, data);
@@ -71,29 +72,39 @@ function init(config, log, events, scheme) {
         sendRequest('post', 'UserLogin', options, successCallback, done);
 
         function successCallback(result) {
-            instance.defaults.storage.addSession(result.name, result);
+            instance.defaults.storage.addSession(result.sessionId, result);
             logger.debug("User login session ", result, " was saved in storage.");
             if (done) done(null, result);
         }
-    }
-
-    function _currentSession(username, token, done) {
-
     }
 
     function _userLogout(session, done) {
         var options = { data: {
             appId: instance.defaults.appId,
-            token: instance.defaults.storage.getAppToken()
+            token: instance.defaults.storage.getAppToken(),
+            cred: instance.defaults.storage.getSessionSync(session)
         }};
 
         sendRequest('post', 'UserLogout', options, successCallback, done);
 
         function successCallback(result) {
-            instance.defaults.storage.removeSession(result.name);
-            logger.debug("User login session ", result, " was saved in storage.");
+            instance.defaults.storage.removeSession(result.sessionId);
+            logger.debug("User login session ", result, " was removed from storage.");
+
             if (done) done(null, result);
         }
+    }
+
+    function _isExistSession(session, done) {
+        instance.defaults.storage.getSession(session, function (err, session) {
+            if (err)
+                done(err);
+
+            if (!session)
+                return done(new errors.AuthError(401, "Session not found"));
+
+            return done(null, session);
+        });
     }
 
     function _create(modelName, model, done) {
@@ -173,7 +184,3 @@ function init(config, log, events, scheme) {
         }
     }
 }
-
-// #region exports
-
-module.exports = init;

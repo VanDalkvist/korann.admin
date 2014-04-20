@@ -11,5 +11,11 @@
     "auth": {
         "appId": "b1bc1a90-bdb2-11e3-9b07-dbea819fe8f0",
         "appSecret": "mR/+jsximqNBRXxj7mY20cEILYRsfa2my8K4XCyTTgTiN2WoL4Y8ZcAx+aBYgxcTWfY5NoeTvhtfdIpHjqiQMg=="
+    },
+    "seance": {
+        "cookieSecret": "mR/+jsximqNBRXxj7mY20cEILYRsfa2my8K4XCyTTgTiN2WoL4Y8ZcAx+aBYgxcTWfY5NoeTvhtfdIpHjqiQMg=="
+    },
+    "session": {
+        "httpOnly": true
     }
 }
