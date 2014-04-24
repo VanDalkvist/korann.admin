@@ -19,6 +19,8 @@ function train(dir) {
 
     var tree = new nject.Tree();
 
+    map = _.extend({ modules: {}, locations: {} }, map);
+
     initConstants(tree, {
         app: express(),
         env: {
@@ -27,9 +29,7 @@ function train(dir) {
         }
     });
 
-    var autoinjectModules = _.where(map, { autoinject: true });
-
-    injectModules(autoinjectModules, dir, tree);
+    injectModules(map.modules, dir, tree);
 
     return tree.resolve();
 }
@@ -43,8 +43,9 @@ function initConstants(tree, constants) {
 }
 
 function injectModules(modulesForInjection, dir, tree) {
-    _.each(modulesForInjection, function (location) {
-        moduleFactories[location.type](path.join(dir, location.path), tree, location.aggregateOn);
+    _.each(modulesForInjection, function (location, key) {
+        var modulePath = path.join(dir, location.path || key);
+        moduleFactories[location.type](modulePath, tree, location.aggregateOn);
     });
 }
 

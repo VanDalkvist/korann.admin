@@ -5,25 +5,18 @@
         "public": "public",
         "logs": "logs"
     },
+    // Factrories:
+    // single   - injected file or directory as one module;
+    // all      - if (type == file) injected by single strategy others directory - injected recursively all files.
     "modules": {
         "log": {
+            "path": "log",
             "type": "single"
         },
         "config": {
             "type": "single"
         },
         "lib": {
-            "type": "all"
-        },
-        "proxy": {
-            "type": "all"
-        },
-        "errors": {
-            "aggregateOn": "errors",
-            "type": "all"
-        },
-        "controllers": {
-            "aggregateOn": "controllers",
             "type": "all"
         }
     }

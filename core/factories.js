@@ -13,7 +13,7 @@ var _ = require('underscore');
 /*
  *  Factories for inject modules.
  *  Types: single - injected file or directory as one module;
- *         all - if file injected by single strategy and directory - injected recursively all files.
+ *         all - if (type == file) injected by single strategy others directory - injected recursively all files.
  */
 module.exports = {
     "single": injectSingleModule,
@@ -22,19 +22,20 @@ module.exports = {
 
 // #region private methods
 
-// todo: add checking if file name contains 'index'. Then directory inject as single module;
 function injectSingleModule(p, tree, aggregateOn) {
     var key = path.basename(p, path.extname(p));
 
     var module = require(p);
 
-    var options = { identifier: key, aggregateOn: aggregateOn };
+    var modulePath = module.ModuleName || key;
+    var options = { identifier: modulePath, aggregateOn: aggregateOn };
 
     _.isFunction(module)
-        ? tree.register(module.ModuleName || key, module, options)
-        : tree.constant(module.ModuleName || key, module, options);
+        ? tree.register(modulePath, module, options)
+        : tree.constant(modulePath, module);
 }
 
+// todo: add checking if file name contains 'index'. Then directory inject as single module;
 function injectFolderModules(p, tree, aggregateOn) {
     var stat = getPathStat(p);
 
