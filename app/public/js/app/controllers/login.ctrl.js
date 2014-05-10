@@ -24,15 +24,19 @@
         submit: function () {
             this.userService
                 .login(this.$.model.login, this.$.model.password)
-                .then(function (result) {
-                    console.log("Login successful!");
-                    this.$rootScope.user = angular.extend({}, result);
-                    this.$location.path("/");
-                },
-                function (error) {
-                    console.log("Login failed! Error is ", error);
-                    this.$.model.error = error.message;
-                });
+                .then(this._loginSuccess, this._loginFailure);
+        },
+
+        // #region public functions
+
+        _loginSuccess: function (result) {
+            console.log("Login successful!");
+            this.$rootScope.user = angular.extend({}, result);
+            this.$location.path("/");
+        },
+        _loginFailure: function (error) {
+            console.log("Login failed! Error is ", error);
+            this.$.model.error = error.message;
         }
     });
 })(app);

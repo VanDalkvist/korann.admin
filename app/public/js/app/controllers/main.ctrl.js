@@ -23,11 +23,13 @@
 
         // #region private functions
         _logout: function () {
-            this.userService.logout().then(function () {
-                delete this.$rootScope.user;
-                console.log("Logout successful!");
-                this.$location.path("/login");
-            });
+            this.userService.logout().then(this._logoutSuccess);
+        },
+
+        _logoutSuccess: function () {
+            delete this.$rootScope.user;
+            console.log("Logout successful!");
+            this.$location.path("/login");
         }
     });
 })(app);
