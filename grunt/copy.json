@@ -1,0 +1,26 @@
+{
+    "angular": {
+        "expand": true,
+        "src": "app/public/js/references/angular/*.js",
+        "dest": "app/public/dist/angular/",
+        "flatten": true
+    },
+    "refs": {
+        "expand": true,
+        "src": [
+            "app/public/js/references/jquery/dist/jquery.js",
+            "app/public/js/references/angular-*/*.js"
+        ],
+        "dest": "app/public/dist/refs/",
+        "flatten": true
+    },
+    "css": {
+        "expand": true,
+        "src": [
+            "app/public//css/*.css",
+            "app/public/js/references/bootstrap/dist/css/bootstrap.min.css"
+        ],
+        "dest": "app/public/dist/css/",
+        "flatten": true
+    }
+}

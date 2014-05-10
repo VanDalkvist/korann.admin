@@ -1,0 +1,11 @@
+{
+    "dev": {
+        "script": "runner.js",
+        "options": {
+            "nodeArgs": ["--debug"]
+        }
+    },
+    "test": {
+        "script": "test.js"
+    }
+}

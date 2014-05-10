@@ -1,0 +1,18 @@
+{
+    "gruntfile": {
+        "files": "Gruntfile.js",
+        "tasks": ["dev"],
+        "options": {
+            "interrupt": true
+        }
+    },
+
+    "content": {
+        "files": ["app/public/**/*", "app/layouts/*", "!app/public/dist/**/*"],
+        "tasks": ["build"],
+        "options": {
+            "spawn": false,
+            "interrupt": true
+        }
+    }
+}
