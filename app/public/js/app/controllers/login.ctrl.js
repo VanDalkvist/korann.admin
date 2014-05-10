@@ -2,35 +2,37 @@
     'use strict';
 
     //
-    app.controller("LoginCtrl", ['$rootScope', '$scope', 'userService', '$location',
-        function ($rootScope, $scope, userService, $location) {
+    app.classy.controller({
+        name: 'LoginCtrl',
+        inject: ['$rootScope', '$scope', 'userService', '$location'],
 
-            // #region model
+        // #region model
 
-            $scope.model = {
-                login: "",
-                password: "",
-                error: ""
-            };
+        model: {
+            login: "",
+            password: "",
+            error: ""
+        },
 
-            // #region public functions
+        // #region initialization
 
-            $scope.submit = _submit;
+        init: function () {
+        },
 
-            // #region private functions
+        // #region public functions
 
-            function _submit() {
-                userService
-                    .login($scope.model.login, $scope.model.password)
-                    .then(function (result) {
-                        console.log("Login successful!");
-                        $rootScope.user = angular.extend({}, result);
-                        $location.path("/");
-                    },
-                    function (error) {
-                        console.log("Login failed! Error is ", error);
-                        $scope.model.error = error.message;
-                    });
-            }
-        }]);
+        submit: function () {
+            this.userService
+                .login(this.$.model.login, this.$.model.password)
+                .then(function (result) {
+                    console.log("Login successful!");
+                    this.$rootScope.user = angular.extend({}, result);
+                    this.$location.path("/");
+                },
+                function (error) {
+                    console.log("Login failed! Error is ", error);
+                    this.$.model.error = error.message;
+                });
+        }
+    });
 })(app);

@@ -183,4 +183,4 @@ module.exports = function init(config, log, events, scheme, errors) {
             if (callback) callback(res.error);
         }
     }
-}
+};

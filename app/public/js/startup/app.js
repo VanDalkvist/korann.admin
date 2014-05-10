@@ -2,7 +2,7 @@
     'use strict';
 
     var app = angular.module('korann.admin', [
-        'ngRoute', 'ngCookies',
+        'ngRoute', 'ngCookies', 'classy',
         'korann.user', 'korann.config'
     ]);
 

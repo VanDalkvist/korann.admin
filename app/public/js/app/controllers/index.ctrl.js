@@ -1,16 +1,25 @@
 (function (app) {
     'use strict';
 
-    // 
-    app.controller("IndexCtrl", ['$scope', function ($scope) {
+    //
+    app.classy.controller({
+        name: 'IndexCtrl',
+        inject: ['$scope'],
 
         // #region model
+        model: {
+
+        },
 
         // #region initialization
 
+        init: function () {
+
+        }
+
         // #region public functions
 
-        // #region private functions
+        // #region private functions (_ prefixed)
 
-    }]);
+    });
 })(app);

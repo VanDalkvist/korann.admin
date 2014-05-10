@@ -5,9 +5,9 @@ var path = require('path');
 
 // Middleware stack for all requests
 
-module.exports = function (app, config, proxy, storage, controllers, ProxyClient) {
+module.exports = function (env, app, config, proxy, storage, controllers, ProxyClient) {
 
-    app.use(express.static(app.locals.public));
+    app.use('/', express.static(app.locals.public));
     app.use(connect_timeout({ time: config.api.request_timeout }));     // request timeouts
     app.use(express.favicon());
     app.use(express.json());

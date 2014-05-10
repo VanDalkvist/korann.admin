@@ -12,7 +12,7 @@
         "config": {
             "type": "single"
         },
-        "lib": {
+        "startup": {
             "type": "all"
         },
         "proxy": {

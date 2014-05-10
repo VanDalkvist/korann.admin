@@ -1,3 +1,5 @@
+var path = require('path');
+
 module.exports = function (log) {
     var logger = log.getLogger(module);
 

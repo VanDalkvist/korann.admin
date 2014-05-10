@@ -2,31 +2,32 @@
     'use strict';
 
     // 
-    app.controller("MainCtrl", ['$rootScope', 'userService', '$location',
-        function ($rootScope, userService, $location) {
+    app.classy.controller({
+        name: 'MainCtrl',
+        inject: ['$rootScope', 'userService', '$location'],
 
-            // #region initialization
-
-            var savedUser = userService.current();
+        // #region initialization
+        init: function () {
+            var savedUser = this.userService.current();
 
             if (!savedUser) return;
 
-            $rootScope.user = {
+            this.$rootScope.user = {
                 username: savedUser.username
             };
 
             // #region public functions
 
-            $rootScope.logout = _logout;
+            this.$rootScope.logout = this._logout;
+        },
 
-            // #region private functions
-
-            function _logout() {
-                userService.logout().then(function () {
-                    delete $rootScope.user;
-                    console.log("Logout successful!");
-                    $location.path("/login");
-                });
-            }
-        }]);
+        // #region private functions
+        _logout: function () {
+            this.userService.logout().then(function () {
+                delete this.$rootScope.user;
+                console.log("Logout successful!");
+                this.$location.path("/login");
+            });
+        }
+    });
 })(app);
