@@ -1,5 +1,3 @@
 var train = require('./train');
 
-exports.init = function () {
-    train(__dirname);
-};
+train(__dirname);
