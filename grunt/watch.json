@@ -1,18 +1,22 @@
 {
-    "gruntfile": {
-        "files": "Gruntfile.js",
-        "tasks": ["dev"],
-        "options": {
-            "interrupt": true
-        }
-    },
+    "task": "grunt-contrib-watch",
+    "name": "watch",
+    "config": {
+        "gruntfile": {
+            "files": ["Gruntfile.js", "grunt/**/*"],
+            "tasks": ["dev"],
+            "options": {
+                "interrupt": true
+            }
+        },
 
-    "content": {
-        "files": ["app/public/**/*", "app/layouts/*", "!app/public/dist/**/*"],
-        "tasks": ["build"],
-        "options": {
-            "spawn": false,
-            "interrupt": true
+        "content": {
+            "files": ["app/public/**/*", "app/layouts/*", "!app/public/dist/**/*"],
+            "tasks": ["build"],
+            "options": {
+                "spawn": false,
+                "interrupt": true
+            }
         }
     }
 }

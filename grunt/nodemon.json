@@ -1,11 +1,15 @@
 {
-    "dev": {
-        "script": "runner.js",
-        "options": {
-            "nodeArgs": ["--debug"]
+    "task": "grunt-nodemon",
+    "name": "nodemon",
+    "config": {
+        "dev": {
+            "script": "runner.js",
+            "options": {
+                "nodeArgs": ["--debug"]
+            }
+        },
+        "test": {
+            "script": "test.js"
         }
-    },
-    "test": {
-        "script": "test.js"
     }
 }

@@ -1,42 +1,46 @@
 {
-    "angular": {
-        "files": [
-            {
-                "src": "app/public/dist/angular/angular.js",
-                "dest": "app/public/dist/angular.js"
-            }
-        ]
-    },
-    "refs": {
-        "files": [
-            {
-                "src": ["app/public/dist/refs/**/*.js", "!app/public/dist/refs/**/*.min.js"],
-                "dest": "app/public/dist/references.js"
-            }
-        ]
-    },
-    "startup": {
-        "files": [
-            {
-                "src": "app/public/js/startup/*.js",
-                "dest": "app/public/dist/startup.js"
-            }
-        ]
-    },
-    "app": {
-        "files": [
-            {
-                "src": "app/public/js/app//**/*.js",
-                "dest": "app/public/dist/korann.js"
-            }
-        ]
-    },
-    "css": {
-        "files": [
-            {
-                "src": "app/public/dist/css/**/*.css",
-                "dest": "app/public/dist/korann.css"
-            }
-        ]
+    "task": "grunt-contrib-concat",
+    "name": "concat",
+    "config": {
+        "angular": {
+            "files": [
+                {
+                    "src": "app/public/dist/angular/angular.js",
+                    "dest": "app/public/dist/angular.js"
+                }
+            ]
+        },
+        "refs": {
+            "files": [
+                {
+                    "src": ["app/public/dist/refs/**/*.js", "!app/public/dist/refs/**/*.min.js"],
+                    "dest": "app/public/dist/references.js"
+                }
+            ]
+        },
+        "startup": {
+            "files": [
+                {
+                    "src": "app/public/js/startup/*.js",
+                    "dest": "app/public/dist/startup.js"
+                }
+            ]
+        },
+        "app": {
+            "files": [
+                {
+                    "src": "app/public/js/app//**/*.js",
+                    "dest": "app/public/dist/korann.js"
+                }
+            ]
+        },
+        "css": {
+            "files": [
+                {
+                    "src": "app/public/dist/css/**/*.css",
+                    "dest": "app/public/dist/korann.css"
+                }
+            ]
+        }
     }
 }

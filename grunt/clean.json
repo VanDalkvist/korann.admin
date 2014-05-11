@@ -1,0 +1,5 @@
+{
+    "task": "grunt-contrib-clean",
+    "name": "clean",
+    "config": ["app/public/dist/"]
+}
