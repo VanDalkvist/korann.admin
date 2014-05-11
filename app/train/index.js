@@ -50,7 +50,6 @@ function injectModules(modulesForInjection, dir, tree) {
 }
 
 function addErrorHandler() {
-    // todo: add restart application when error was catch;
     process.on("uncaughtException", function (err) {
         console.error("Exiting process due to uncaught exception!\n" + err.stack);
         process.exit();

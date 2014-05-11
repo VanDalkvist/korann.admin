@@ -3,7 +3,7 @@
     "name": "watch",
     "config": {
         "gruntfile": {
-            "files": ["Gruntfile.js", "grunt/**/*", "app/**/*"],
+            "files": ["Gruntfile.js", "grunt/**/*", "app/**/*", "!app/public/dist/**/*"],
             "tasks": ["restart"],
             "options": {
                 "interrupt": true
