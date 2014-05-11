@@ -6,5 +6,6 @@ module.exports = function (grunt) {
 
     grunt.registerTask('build', ['clean', 'copy', 'concat']);
     grunt.registerTask('dev', ['build', 'nodemon']);
+    grunt.registerTask('restart', ['nodemon']);
     grunt.registerTask('test', ['copy', 'nodemon']);
 };

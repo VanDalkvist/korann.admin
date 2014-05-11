@@ -3,7 +3,7 @@
     "name": "nodemon",
     "config": {
         "dev": {
-            "script": "runner.js",
+            "script": "./app",
             "options": {
                 "nodeArgs": ["--debug"]
             }
