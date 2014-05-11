@@ -13,7 +13,7 @@
         "refs": {
             "files": [
                 {
-                    "src": ["app/public/dist/refs/**/*.js", "!app/public/dist/refs/**/*.min.js"],
+                    "src": ["app/public/dist/refs/jquery.js", "app/public/dist/refs/**/*.js", "!app/public/dist/refs/**/*.min.js"],
                     "dest": "app/public/dist/references.js"
                 }
             ]

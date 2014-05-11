@@ -6,21 +6,40 @@ html(ng-app="korann.admin")
         link(rel='stylesheet', href='/dist/korann.css')
         base(href="/")
 body(ng-controller="MainCtrl")
-    div.container
-        div.navbar.navbar-inverse.nav-justified
-            div.navbar-inner
-                a.brand.brand-korann(ng-href='/') KoraNN.Admin
-                ul.nav.pull-right.user-panel
-                    li(ng-if="!user.username")
-                        a.login-btn(ng-href="/login") Login
-                    li(ng-if="user.username")
-                        ul.inline
-                            li
-                                label Hello, {{user.username}}
-                            li
-                                button.btn.btn-default.logout-btn(ng-click="logout()") Log Out
-
-    div.container(ng-view)
+    .header
+        .container
+            .row
+                .col-md-4
+                    .logo
+                        h1
+                            a(href='index.html') Korann.Admin
+                .col-md-4
+                    .row
+                        .col-lg-10
+                            .input-group.form
+                                input.form-control(type='text', placeholder='Search...')
+                                span.input-group-btn
+                                    button.btn.btn-primary(type='button') Search
+                .col-md-1.pull-right(ng-if="!user.username")
+                    .row
+                        .col-lg-8
+                            .input-group.form
+                                .action
+                                    a.btn.btn-primary.signup(href="/login") Login
+                .col-md-2.pull-right(ng-if="user.username")
+                    .navbar.navbar-inverse(role='banner')
+                        nav.collapse.navbar-collapse.bs-navbar-collapse.navbar-right(role='navigation')
+                            ul.nav.navbar-nav
+                                li.dropdown
+                                    a.dropdown-toggle(href='#', data-toggle='dropdown')
+                                        | Hello, {{user.username}}
+                                        b.caret
+                                    ul.dropdown-menu.animated.fadeInUp(role="menu")
+                                        li
+                                            a Profile
+                                        li
+                                            a(href='login.html', ng-click="logout()") Logout
+    .page-content.container(ng-view)
 
     script(src="/dist/angular.js")
     script(src="/dist/references.js")
