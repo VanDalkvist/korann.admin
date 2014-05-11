@@ -1,10 +1,10 @@
 module.exports = function (grunt) {
 
-    var gruntConfiguration = require('./.grunt.config');
+    var config = require('./.grunt.config');
 
-    grunt.initConfig(gruntConfiguration.get(grunt));
+    grunt.initConfig(config.get(grunt));
 
-    grunt.registerTask('build', ['newer:clean', 'newer:copy', 'newer:concat']);
+    grunt.registerTask('build', ['clean', 'copy', 'concat']);
     grunt.registerTask('dev', ['build', 'nodemon']);
     grunt.registerTask('test', ['copy', 'nodemon']);
 };
