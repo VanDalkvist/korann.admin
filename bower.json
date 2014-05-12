@@ -1,16 +1,17 @@
 {
-    "name": "korann-admin",
-    "version": "1.0.0",
-    "dependencies": {
-        "angular": "~1.2.16",
-        "bootstrap": "~3.1.1",
-        "angular-resource": "~1.2.16",
-        "angular-route": "~1.2.16",
-        "angular-cookies": "~1.2.16",
-        "underscore": "~1.6.0",
-        "angular-classy": "~0.4.2",
-        "angular-bootstrap": "~0.11.0",
-        "angular-ui-router": "~0.2.10"
-    },
-    "devDependencies": {}
+  "name": "korann-admin",
+  "version": "1.0.0",
+  "dependencies": {
+    "angular": "~1.2.16",
+    "bootstrap": "~3.1.1",
+    "angular-resource": "~1.2.16",
+    "angular-route": "~1.2.16",
+    "angular-cookies": "~1.2.16",
+    "underscore": "~1.6.0",
+    "angular-classy": "~0.4.2",
+    "angular-bootstrap": "~0.11.0",
+    "angular-ui-router": "~0.2.10",
+    "bootbox": "~4.2.0"
+  },
+  "devDependencies": {}
 }
