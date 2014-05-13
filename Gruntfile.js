@@ -4,7 +4,7 @@ module.exports = function (grunt) {
 
     grunt.initConfig(config.get(grunt));
 
-    grunt.registerTask('build', ['clean', 'copy', 'concat']);
+    grunt.registerTask('build', ['clean:all', 'copy', 'concat', 'clean:build']);
     grunt.registerTask('dev', ['build', 'nodemon']);
     grunt.registerTask('restart', ['nodemon']);
     grunt.registerTask('test', ['copy', 'nodemon']);

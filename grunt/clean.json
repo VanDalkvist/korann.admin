@@ -2,6 +2,7 @@
     "task": "grunt-contrib-clean",
     "name": "clean",
     "config": {
-        "dist": ["app/public/dist/"]
+        "build": ["temp/"],
+        "all": ["client/"]
     }
 }

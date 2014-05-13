@@ -3,14 +3,14 @@
     "name": "watch",
     "config": {
         "gruntfile": {
-            "files": ["Gruntfile.js", "grunt/**/*", "app/**/*", "!app/public/dist/**/*"],
+            "files": ["Gruntfile.js", "grunt/**/*", "app/**/*"],
             "tasks": ["restart"],
             "options": {
                 "interrupt": true
             }
         },
         "content": {
-            "files": ["app/public/**/*", "app/layouts/*", "!app/public/dist/**/*"],
+            "files": ["client/**/*", "app/layouts/*", "!app/public/dist/**/*"],
             "tasks": ["build"],
             "options": {
                 "spawn": false,

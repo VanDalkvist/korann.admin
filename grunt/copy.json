@@ -5,7 +5,7 @@
         "angular": {
             "expand": true,
             "src": "bower_components/angular/*.js",
-            "dest": "app/public/dist/angular/",
+            "dest": "client/temp/angular/",
             "flatten": true
         },
         "refs": {
@@ -15,7 +15,7 @@
                 "bower_components/bootstrap/dist/js/bootstrap.js",
                 "bower_components/angular-*/*.js"
             ],
-            "dest": "app/public/dist/refs/",
+            "dest": "client/temp/refs/",
             "flatten": true
         },
         "css": {
@@ -24,7 +24,7 @@
                 "app/public//css/*.css",
                 "bower_components/bootstrap/dist/css/bootstrap.min.css"
             ],
-            "dest": "app/public/dist/css/",
+            "dest": "client/temp/css/",
             "flatten": true
         }
     }

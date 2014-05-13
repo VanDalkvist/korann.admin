@@ -2,7 +2,7 @@
     "locations": {
         "layouts": "layouts",
         "views": "views",
-        "public": "public",
+        "public": "..\\client",
         "logs": "logs"
     },
     "modules": {

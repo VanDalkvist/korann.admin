@@ -5,16 +5,16 @@
         "angular": {
             "files": [
                 {
-                    "src": "app/public/dist/angular/angular.js",
-                    "dest": "app/public/dist/angular.js"
+                    "src": ["client/temp/angular/angular.js", "client/temp/refs/jquery.js"],
+                    "dest": "client/scripts/vendor-startup.js"
                 }
             ]
         },
         "refs": {
             "files": [
                 {
-                    "src": ["app/public/dist/refs/jquery.js", "app/public/dist/refs/**/*.js", "!app/public/dist/refs/**/*.min.js"],
-                    "dest": "app/public/dist/references.js"
+                    "src": ["client/temp/refs/**/*.js", "!client/temp/refs/**/*.min.js", "!client/temp/refs/jquery.js"],
+                    "dest": "client/scripts/vendor-references.js"
                 }
             ]
         },
@@ -22,7 +22,7 @@
             "files": [
                 {
                     "src": "app/public/js/startup/*.js",
-                    "dest": "app/public/dist/startup.js"
+                    "dest": "client/scripts/app-startup.js"
                 }
             ]
         },
@@ -30,15 +30,15 @@
             "files": [
                 {
                     "src": "app/public/js/app//**/*.js",
-                    "dest": "app/public/dist/korann.js"
+                    "dest": "client/scripts/app-all.js"
                 }
             ]
         },
         "css": {
             "files": [
                 {
-                    "src": "app/public/dist/css/**/*.css",
-                    "dest": "app/public/dist/korann.css"
+                    "src": "client/temp/css/**/*.css",
+                    "dest": "client/css/korann.css"
                 }
             ]
         }
