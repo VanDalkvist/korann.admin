@@ -2,43 +2,19 @@
     "task": "grunt-contrib-concat",
     "name": "concat",
     "config": {
-        "angular": {
-            "files": [
-                {
-                    "src": ["client/temp/angular/angular.js", "client/temp/refs/jquery.js"],
-                    "dest": "client/scripts/vendor-startup.js"
-                }
-            ]
-        },
-        "refs": {
-            "files": [
-                {
-                    "src": ["client/temp/refs/**/*.js", "!client/temp/refs/**/*.min.js", "!client/temp/refs/jquery.js"],
-                    "dest": "client/scripts/vendor-references.js"
-                }
-            ]
-        },
         "startup": {
             "files": [
                 {
-                    "src": "app/public/js/startup/*.js",
-                    "dest": "client/scripts/app-startup.js"
-                }
-            ]
-        },
-        "app": {
-            "files": [
-                {
-                    "src": "app/public/js/app//**/*.js",
-                    "dest": "client/scripts/app-all.js"
+                    "src": ["<%= meta.js %>startup/**/*.js", "<%= meta.js %>app/**/*.js"],
+                    "dest": "<%= meta.jsDest %>app.js"
                 }
             ]
         },
         "css": {
             "files": [
                 {
-                    "src": "client/temp/css/**/*.css",
-                    "dest": "client/css/korann.css"
+                    "src": "<%= meta.build %>css/**/*.css",
+                    "dest": "<%= meta.cssDest %>app.css"
                 }
             ]
         }

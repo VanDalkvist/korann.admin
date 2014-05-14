@@ -10,7 +10,7 @@
             }
         },
         "content": {
-            "files": ["client/**/*", "app/layouts/*", "!app/public/dist/**/*"],
+            "files": ["public/js/**/*"],
             "tasks": ["build"],
             "options": {
                 "spawn": false,

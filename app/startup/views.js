@@ -19,5 +19,5 @@ module.exports = function (app, env, log) {
         shared: path.join(env.root, env.locations.public, env.locations.views, 'shared')
     });
 
-    logger.debug("app.locals = '%j'", util.inspect(app.locals.public));
+    logger.debug("app.locals.public = '%j'", util.inspect(app.locals.public));
 };

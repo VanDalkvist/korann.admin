@@ -2,7 +2,6 @@
     "task": "grunt-contrib-clean",
     "name": "clean",
     "config": {
-        "build": ["temp/"],
-        "all": ["client/"]
+        "build": [ "<%= meta.build %>" ]
     }
 }

@@ -13,5 +13,6 @@
     "angular-ui-router": "~0.2.10",
     "bootbox": "~4.2.0"
   },
-  "devDependencies": {}
+    "devDependencies": {},
+    "main": ["public/js/startup/**/*.js", "public/js/app/**/*.js"]
 }

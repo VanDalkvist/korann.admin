@@ -15,7 +15,9 @@ function init() {
 
     return {
         get: function (grunt) {
-            var config = {};
+            var config = {
+                meta: _internalConfig()
+            };
 
             fs.readdirSync(gruntConfigPath).forEach(function (file) {
                 var filePath = gruntConfigPath + file;
@@ -31,6 +33,24 @@ function init() {
             return config;
         }
     }
+}
+
+// #region private functions
+
+function _internalConfig() {
+
+    var clientPath = "public/";
+
+    return {
+        client: clientPath,
+        js: clientPath + "js/",
+        build: "build/",
+        jsDest: clientPath + "compiled/js/",
+        cssDest: clientPath + "compiled/css/",
+        layouts: clientPath + "views/shared/layouts/",
+        views: clientPath + "views/",
+        bower: "bower_components/"
+    };
 }
 
 // #region exports

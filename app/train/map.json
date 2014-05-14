@@ -1,8 +1,8 @@
 {
     "locations": {
-        "layouts": "layouts",
-        "views": "views",
-        "public": "..\\client",
+        "layouts": "../public/views/shared/layouts",
+        "views": "../public/views/",
+        "public": "../public",
         "logs": "logs"
     },
     "modules": {

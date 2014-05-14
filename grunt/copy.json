@@ -2,29 +2,10 @@
     "task": "grunt-contrib-copy",
     "name": "copy",
     "config": {
-        "angular": {
-            "expand": true,
-            "src": "bower_components/angular/*.js",
-            "dest": "client/temp/angular/",
-            "flatten": true
-        },
-        "refs": {
-            "expand": true,
-            "src": [
-                "bower_components/jquery/dist/jquery.js",
-                "bower_components/bootstrap/dist/js/bootstrap.js",
-                "bower_components/angular-*/*.js"
-            ],
-            "dest": "client/temp/refs/",
-            "flatten": true
-        },
         "css": {
             "expand": true,
-            "src": [
-                "app/public//css/*.css",
-                "bower_components/bootstrap/dist/css/bootstrap.min.css"
-            ],
-            "dest": "client/temp/css/",
+            "src": [ "<%= meta.client %>css/*.css" ],
+            "dest": "<%= meta.build %>css/",
             "flatten": true
         }
     }

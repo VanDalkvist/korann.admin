@@ -3,8 +3,12 @@ html(ng-app="korann.admin")
     head
         meta(charset="utf-8")
         title Angular Express Train
-        link(rel='stylesheet', href='/dist/korann.css')
+
+        include css
+
+        link(rel='stylesheet', href='/compiled/css/app.css')
         base(href="/")
+
 body(ng-controller="MainCtrl")
     .header
         .container
@@ -41,7 +45,6 @@ body(ng-controller="MainCtrl")
                                             a(href='login.html', ng-click="logout()") Logout
     .page-content.container(ng-view)
 
-    script(src="/dist/angular.js")
-    script(src="/dist/references.js")
-    script(src="/dist/startup.js")
-    script(src="/dist/korann.js")
+    include references
+
+    script(src="/compiled/js/app.js")
