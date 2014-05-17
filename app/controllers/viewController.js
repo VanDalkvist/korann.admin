@@ -1,11 +1,11 @@
 var path = require('path');
 
-module.exports = function (log) {
+module.exports = function (env, log) {
     var logger = log.getLogger(module);
 
     return {
         index: function (req, res) {
-            res.render('index');
+            res.render('layout');
         },
         view: function (type) {
             return function (req, res) {

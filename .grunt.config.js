@@ -22,11 +22,15 @@ function init() {
             fs.readdirSync(gruntConfigPath).forEach(function (file) {
                 var filePath = gruntConfigPath + file;
 
+//                var stat = fs.statSync(filePath);
+//                if (stat.isDirectory())
+//                    return;
+
                 var module = require(filePath);
 
                 config[module.name] = module.config;
 
-                // load task
+                // loading task
                 grunt.loadNpmTasks(module.task);
             });
 
@@ -39,17 +43,24 @@ function init() {
 
 function _internalConfig() {
 
+    var dependencies = require('wiredep')({
+        directory: "public/vendors"
+    });
+
     var clientPath = "public/";
 
     return {
+        dependencies: {
+            js: dependencies.js,
+            css: dependencies.css
+        },
         client: clientPath,
         js: clientPath + "js/",
         build: "build/",
         jsDest: clientPath + "compiled/js/",
         cssDest: clientPath + "compiled/css/",
-        layouts: clientPath + "views/shared/layouts/",
-        views: clientPath + "views/",
-        bower: "bower_components/"
+        shared: clientPath + "views/shared/",
+        views: clientPath + "views/"
     };
 }
 

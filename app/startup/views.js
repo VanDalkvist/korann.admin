@@ -6,7 +6,7 @@ module.exports = function (app, env, log) {
 
     var logger = log.getLogger(module);
 
-    app.set('views', path.join(env.root, env.locations.layouts));
+    app.set('views', path.join(env.root, env.locations.shared));
     app.set('view engine', 'jade');
 
     app.engine('.html', jade.__express);
@@ -15,8 +15,8 @@ module.exports = function (app, env, log) {
 
     app.locals({
         public: path.join(env.root, env.locations.public),
-        views: path.join(env.root, env.locations.public, env.locations.views),
-        shared: path.join(env.root, env.locations.public, env.locations.views, 'shared')
+        views: path.join(env.root, env.locations.views),
+        shared: path.join(env.root, env.locations.shared)
     });
 
     logger.debug("app.locals.public = '%j'", util.inspect(app.locals.public));

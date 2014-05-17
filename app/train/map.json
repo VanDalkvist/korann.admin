@@ -1,9 +1,9 @@
 {
     "locations": {
-        "layouts": "../public/views/shared/layouts",
+        "shared": "../public/views/shared",
         "views": "../public/views/",
         "public": "../public",
-        "logs": "logs"
+        "logs": "../logs"
     },
     "modules": {
         "log": {

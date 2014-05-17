@@ -2,9 +2,15 @@
     "task": "grunt-contrib-copy",
     "name": "copy",
     "config": {
+        "vendors": {
+            "expand": true,
+            "src": "<%= meta.dependencies.js %>",
+            "dest": "<%= meta.build %>vendors/",
+            "flatten": true
+        },
         "css": {
             "expand": true,
-            "src": [ "<%= meta.client %>css/*.css" ],
+            "src": [ "<%= meta.dependencies.css %>", "<%= meta.client %>css/*.css" ],
             "dest": "<%= meta.build %>css/",
             "flatten": true
         }

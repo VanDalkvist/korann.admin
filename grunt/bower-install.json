@@ -1,9 +1,0 @@
-{
-    "task": "grunt-bower-install",
-    "name": "bowerInstall",
-    "config": {
-        "debug": {
-            "src": ["<%= meta.layouts %>references.jade", "<%= meta.layouts %>css.jade"]
-        }
-    }
-}
