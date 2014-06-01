@@ -1,5 +1,64 @@
-.row
-    .col-md-6.col-md-offset-3
+.row(ng-if="user.username")
+    .col-md-2
+        .sidebar.content-box(style='display: block; position: fixed;')
+            ul.nav
+                li.current
+                    a(href='index.html')
+                        i.glyphicon.glyphicon-home
+                        | Панель управления
+                li
+                    a(href='calendar.html')
+                        i.glyphicon.glyphicon-calendar
+                        | Calendar
+                li
+                    a(href='stats.html')
+                        i.glyphicon.glyphicon-stats
+                        | Statistics (Charts)
+                li
+                    a(href='tables.html')
+                        i.glyphicon.glyphicon-list
+                        | Tables
+                li
+                    a(href='buttons.html')
+                        i.glyphicon.glyphicon-record
+                        | Buttons
+                li
+                    a(href='editors.html')
+                        i.glyphicon.glyphicon-pencil
+                        | Editors
+                li
+                    a(href='forms.html')
+                        i.glyphicon.glyphicon-tasks
+                        | Forms
+
+    .col-md-6.col-md-offset-2
+        h2 Welcome!
+            p This is a AngularJS "KoraNN.Admin".
+            p Stuff that was used to make this:
+                ul
+                    li Node.js using the framework based on Train scheme
+                    li Jade templates
+                    li AngularJS
+                    li Bootstrap 3.1
+                    li GruntJS for app building
+        h2 Welcome!
+            p This is a AngularJS "KoraNN.Admin".
+            p Stuff that was used to make this:
+                ul
+                    li Node.js using the framework based on Train scheme
+                    li Jade templates
+                    li AngularJS
+                    li Bootstrap 3.1
+                    li GruntJS for app building
+        h2 Welcome!
+            p This is a AngularJS "KoraNN.Admin".
+            p Stuff that was used to make this:
+                ul
+                    li Node.js using the framework based on Train scheme
+                    li Jade templates
+                    li AngularJS
+                    li Bootstrap 3.1
+                    li GruntJS for app building
         h2 Welcome!
             p This is a AngularJS "KoraNN.Admin".
             p Stuff that was used to make this:

@@ -7,7 +7,5 @@
                     form(name="loginForm", ng-submit="submit()")
                         input.form-control(type='text', ng-model="model.login", required, placeholder='Login')
                         input.form-control(type='password', ng-model="model.password", required, placeholder='Password')
-                        .form-group
-                            label.control-label.red(ng-show="model.error") {{model.error}}
-                        .action
-                            a.btn.btn-primary.signup(ng-disabled="loginForm.$invalid", ng-click="submit()") Login
+                        .form-group: label.control-label.red(ng-show="model.error") {{model.error}}
+                        .action: button.btn.btn-primary.signup(type="submit", ng-disabled="loginForm.$invalid") Login

@@ -11,7 +11,8 @@
         "angular-classy": "~0.4.2",
         "angular-bootstrap": "~0.11.0",
         "angular-ui-router": "~0.2.10",
-        "bootbox": "~4.2.0"
+        "bootbox": "~4.2.0",
+        "angular-animate": "~1.2.16"
     },
     "devDependencies": {}
 }

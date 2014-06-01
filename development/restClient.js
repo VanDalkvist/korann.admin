@@ -12,45 +12,40 @@ var proxy = require('../app/proxy/proxy');
 var proxyClient = proxy(config, log, events, scheme);
 var storage = require('../app/proxy/storage');
 var logger = log.getLogger(module);
+var async = require('async');
 
 // #region initialization
 
-function init(done) {
+function init(cred, done) {
     var appAuthConfig = config.auth;
 
     var client = new proxyClient(appAuthConfig.appId, appAuthConfig.appSecret, storage);
 
-    (function (next) {
-        client.authorizeApp(function (err, data) {
-            if (err) {
-                logger.error("Test failed. Error is ", err);
-                if (next) next();
-                return;
-            }
-            logger.info("Test passed. Response is ", data);
-            if (next) next();
-        });
-    })(function () {
-        authUser(done);
+    async.waterfall([
+        function (callback) {
+            client.authorizeApp(function (err, data) {
+                if (err) {
+                    logger.error("Test failed. Error is: \n", err, " \n");
+                    callback(err);
+                }
+                logger.debug("Test passed. Response is: \n", data, " \n");
+                callback(null);
+            });
+        },
+        function (callback) {
+            client.userLogin(cred.username, cred.password, function (err, data) {
+                if (err) {
+                    logger.error("Test failed. Error is: \n", err, " \n");
+                    callback(err);
+                }
+                logger.info("Test passed. Response is: \n", data, " \n");
+                callback(null, client, data);
+            });
+        }
+    ], function (err, client, session) {
+        done(err, client, session);
     });
-
-    function authUser(next) {
-        var username = 'admin';
-        var password = 'admin';
-
-        client.userLogin(username, password, function (err, data) {
-            if (err) {
-                logger.error("Test failed. Error is ", err);
-                if (next) next();
-                return;
-            }
-            logger.info("Test passed. Response is ", data);
-            if (next) next();
-        });
-    }
 }
-
-// #region private methods
 
 // #region exports
 

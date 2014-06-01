@@ -10,7 +10,7 @@
             }
         },
         "content": {
-            "files": ["public/js/**/*"],
+            "files": ["public/vendors/**/*", "public/js/**/*"],
             "tasks": ["build"],
             "options": {
                 "spawn": false,

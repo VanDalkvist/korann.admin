@@ -51,39 +51,49 @@ module.exports = function init(config, log, events, scheme, errors) {
         sendRequest('post', 'AppAuth', options, successCallback, done);
 
         function successCallback(data) {
-            instance.defaults.storage.saveAppToken(data.token);
-            if (data.sessions && data.sessions.length)
-                instance.defaults.storage.init(data.sessions, "_id", "context");
-            logger.debug("Access token for application {" + instance.defaults.appId + "} was saved in storage.");
+            var storage = instance.defaults.storage;
+
+            storage.saveAppToken(data.token);
+            if (data.sessions && data.sessions.length) storage.init(data.sessions, "_id", "context");
+
+            logger.debug("Access token for application '" + instance.defaults.appId + "' was saved in storage.");
 
             if (done) done(null, data);
         }
     }
 
     function _userLogin(username, password, done) {
-        // todo: set appId and token to headers
-
-        var options = { data: {
-            appId: instance.defaults.appId,
-            token: instance.defaults.storage.getAppToken(),
-            cred: { username: username, password: password }
-        }};
+        var options = {
+            data: {
+                cred: { username: username, password: password }
+            },
+            headers: {
+                appId: instance.defaults.appId,
+                token: instance.defaults.storage.getAppToken()
+            }
+        };
 
         sendRequest('post', 'UserLogin', options, successCallback, done);
 
         function successCallback(result) {
             instance.defaults.storage.addSession(result.sessionId, result);
-            logger.debug("User login session ", result, " was saved in storage.");
+
+            logger.debug("User login session \n", result, " was saved in storage.");
+
             if (done) done(null, result);
         }
     }
 
     function _userLogout(session, done) {
-        var options = { data: {
-            appId: instance.defaults.appId,
-            token: instance.defaults.storage.getAppToken(),
-            cred: instance.defaults.storage.getSessionSync(session)
-        }};
+        var options = {
+            data: {
+                cred: instance.defaults.storage.getSessionSync(session)
+            },
+            headers: {
+                appId: instance.defaults.appId,
+                token: instance.defaults.storage.getAppToken()
+            }
+        };
 
         sendRequest('post', 'UserLogout', options, successCallback, done);
 
@@ -97,18 +107,16 @@ module.exports = function init(config, log, events, scheme, errors) {
 
     function _isExistSession(session, done) {
         instance.defaults.storage.getSession(session, function (err, session) {
-            if (err)
-                done(err);
+            if (err) done(err);
 
-            if (!session)
-                return done(new errors.AuthError(401, "Session not found"));
+            if (!session) return done(new errors.AuthError(401, "Session not found"));
 
             return done(null, session);
         });
     }
 
-    function _create(modelName, model, done) {
-        sendRequest('post', modelName, { data: model }, successCallback, done);
+    function _create(modelName, model, sessionId, done) {
+        sendAuthenticatedRequest('post', modelName, { data: model }, successCallback, sessionId, done);
 
         function successCallback(result) {
             logger.debug(modelName, "(id = ", result.id, ") was created.");
@@ -117,8 +125,8 @@ module.exports = function init(config, log, events, scheme, errors) {
         }
     }
 
-    function _update(modelName, model, done) {
-        sendRequest('put', modelName, { data: model }, successCallback, done); // todo: create constants file
+    function _update(modelName, model, sessionId, done) {
+        sendAuthenticatedRequest('put', modelName, { data: model }, successCallback, sessionId, done); // todo: create constants file
 
         function successCallback(result) {
             logger.debug(modelName, "(id = ", model.id, ") was updated.");
@@ -127,8 +135,8 @@ module.exports = function init(config, log, events, scheme, errors) {
         }
     }
 
-    function _remove(modelName, query, done) {
-        sendRequest('del', modelName, { query: query }, successCallback, done);
+    function _remove(modelName, query, sessionId, done) {
+        sendAuthenticatedRequest('del', modelName, { query: query }, successCallback, sessionId, done);
 
         function successCallback(result) {
             logger.debug(modelName, "was deleted.");
@@ -137,14 +145,27 @@ module.exports = function init(config, log, events, scheme, errors) {
         }
     }
 
-    function _read(modelName, query, done) {
-        sendRequest('get', modelName, { query: query }, successCallback, done);
+    function _read(modelName, query, sessionId, done) {
+        sendAuthenticatedRequest('get', modelName, { query: query }, successCallback, sessionId, done);
 
         function successCallback(result) {
-            logger.debug("Response received successfully. Data is ", result);
+            logger.debug("Response received successfully. Data is: \n", result, " \n");
 
             if (done) done(null, result);
         }
+    }
+
+    function sendAuthenticatedRequest(method, modelName, options, successCallback, sessionId, done) {
+        var credentials = instance.defaults.storage.getSessionSync(sessionId);
+        var headers = {
+            appId: instance.defaults.appId,
+            token: instance.defaults.storage.getAppToken(),
+            session: credentials.sessionId
+        };
+
+        options = _.extend({ headers: headers });
+
+        sendRequest(method, modelName, options, successCallback, done);
     }
 
     function sendRequest(method, modelName, options, successCallback, done) {
@@ -157,6 +178,9 @@ module.exports = function init(config, log, events, scheme, errors) {
         var eventCallbacks = { };
         eventCallbacks[events.Success] = successCallback;
         eventCallbacks[events.Fail] = _getFailCallback(done);
+
+        //eventCallbacks[events.Complete] = _completeCallback; // for debug
+
         return eventCallbacks;
     }
 
@@ -182,5 +206,9 @@ module.exports = function init(config, log, events, scheme, errors) {
 
             if (callback) callback(res.error);
         }
+    }
+
+    function _completeCallback(res) {
+        logger.debug(res);
     }
 };

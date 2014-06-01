@@ -9,13 +9,12 @@ html(ng-app="korann.admin")
         base(href="/")
 
 body(ng-controller="MainCtrl")
-    .header
+    .header.navbar-fixed-top
         .container
             .row
                 .col-md-4
                     .logo
-                        h1
-                            a(href='index.html') Korann.Admin
+                        h1: a(href='index.html') Korann.Admin
                 .col-md-4
                     .row
                         .col-lg-10
@@ -27,8 +26,7 @@ body(ng-controller="MainCtrl")
                     .row
                         .col-lg-8
                             .input-group.form
-                                .action
-                                    a.btn.btn-primary.signup(href="/login") Login
+                                .action: a.btn.btn-primary.signup(href="/login") Login
                 .col-md-2.pull-right(ng-if="user.username")
                     .navbar.navbar-inverse(role='banner')
                         nav.collapse.navbar-collapse.bs-navbar-collapse.navbar-right(role='navigation')
@@ -38,10 +36,9 @@ body(ng-controller="MainCtrl")
                                         | Hello, {{user.username}}
                                         b.caret
                                     ul.dropdown-menu.animated.fadeInUp(role="menu")
-                                        li
-                                            a Profile
-                                        li
-                                            a(href='login.html', ng-click="logout()") Logout
-    .page-content.container(ng-view)
+                                        li: a Profile
+                                        li: a(href='login.html', ng-click="logout()") Logout
+
+    .page-content.container.reset-width(ng-view)
 
     include ../internal/references

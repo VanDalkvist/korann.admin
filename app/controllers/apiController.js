@@ -1,64 +1,55 @@
-module.exports = function (app) {
+module.exports = function (ProxyClient, log) {
     var controller = {};
+    var logger = log.getLogger(module);
 
-    var client = app.locals.client;
+    function Client() {
+        return ProxyClient.Instance();
+    }
 
     /*
      Generic CRUD functions for any model
      */
-    controller.get = [
-        /*
-         route functions get 3 args - the request object, the response object, and next - a callback to move on
-         to the next middleware.
-         req.query = json object with query string arguments
-         req.params = json object with values of routing params such as :model or :id
-         req.body = json request body from post / put requests
-         */
-        function (req, res, next) {
-            console.log('starting api.search');
-            var query = req.query;
+    controller.get = function (req, res, next) {
+        var query = req.query;
 
-            client.read(req.params.model, query, function (err, data) {
-                if (err) return next(err);
+        Client().read(req.params.model, query, function (err, data) {
+            if (err) return next(err);
 
-                return res.json(data);
-            });
-        }
-    ]
-    controller.create = [
-        function (req, res, next) {
-            var model = req.body;
+            return res.json(data);
+        });
+    };
 
-            console.log(model);
+    controller.create = function (req, res, next) {
+        var model = req.body;
 
-            client.create(req.params.model, model, function (err, data) {
-                if (err) return next(err);
+        console.log(model);
 
-                return res.json(data);
-            });
-        }
-    ]
-    controller.update = [
-        function (req, res, next) {
-            var id = req.params.id;
-            delete req.body._id; //removing the _id from the model to prevent mongo from thinking we are trying to change its type
-            req.Model.findByIdAndUpdate(id, req.body, function (err, doc) {
-                if (err) return next(err);
-                if (doc === null) return res.send(404);
-                return res.json(doc);
-            })
-        }
-    ]
-    controller.delete = [
-        function (req, res, next) {
-            var id = req.params.id;
-            req.Model.findByIdAndRemove(id, function (err, doc) {
-                if (err) return next(err);
-                if (doc === null) return res.send(404);
-                return res.send(204);
-            })
-        }
-    ]
+        Client().create(req.params.model, model, function (err, data) {
+            if (err) return next(err);
+
+            return res.json(data);
+        });
+    };
+
+    controller.update = function (req, res, next) {
+        var model = req.body;
+
+        Client().update(req.params.model, model, function (err, data) {
+            if (err) return next(err);
+
+            return res.json(data);
+        });
+    };
+
+    controller.remove = function (req, res, next) {
+        var query = req.query;
+
+        Client().remove(req.params.model, query, function (err, data) {
+            if (err) return next(err);
+
+            return res.json(data);
+        });
+    };
 
     return controller;
-}
+};

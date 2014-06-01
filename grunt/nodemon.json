@@ -5,7 +5,8 @@
         "dev": {
             "script": "./app",
             "options": {
-                "nodeArgs": ["--debug"]
+                "nodeArgs": ["--debug"],
+                "ignore": [ "public/**/*" ]
             }
         },
         "test": {
