@@ -1,6 +1,6 @@
-.row(ng-if="user.username")
+.row(ng-if="!!user.username")
     .col-md-2
-        .sidebar.content-box(style='display: block; position: fixed;')
+        .sidebar.content-box(style='display: block;')
             ul.nav
                 li.current
                     a(href='index.html')
@@ -31,40 +31,4 @@
                         i.glyphicon.glyphicon-tasks
                         | Forms
 
-    .col-md-6.col-md-offset-2
-        h2 Welcome!
-            p This is a AngularJS "KoraNN.Admin".
-            p Stuff that was used to make this:
-                ul
-                    li Node.js using the framework based on Train scheme
-                    li Jade templates
-                    li AngularJS
-                    li Bootstrap 3.1
-                    li GruntJS for app building
-        h2 Welcome!
-            p This is a AngularJS "KoraNN.Admin".
-            p Stuff that was used to make this:
-                ul
-                    li Node.js using the framework based on Train scheme
-                    li Jade templates
-                    li AngularJS
-                    li Bootstrap 3.1
-                    li GruntJS for app building
-        h2 Welcome!
-            p This is a AngularJS "KoraNN.Admin".
-            p Stuff that was used to make this:
-                ul
-                    li Node.js using the framework based on Train scheme
-                    li Jade templates
-                    li AngularJS
-                    li Bootstrap 3.1
-                    li GruntJS for app building
-        h2 Welcome!
-            p This is a AngularJS "KoraNN.Admin".
-            p Stuff that was used to make this:
-                ul
-                    li Node.js using the framework based on Train scheme
-                    li Jade templates
-                    li AngularJS
-                    li Bootstrap 3.1
-                    li GruntJS for app building
+    .col-md-8.col-md-offset-1(ui-view="")

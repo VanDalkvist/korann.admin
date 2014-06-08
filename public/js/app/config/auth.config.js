@@ -11,27 +11,29 @@
              complex with this strategy, such as queueing up failed requests and re-trying them once the user logs in.
              Read all about it here: http://www.espeo.pl/2012/02/26/authentication-in-angularjs-application
              */
-            var interceptor = ['$q', '$location', '$rootScope', 'cache', function ($q, $location, $rootScope, cache) {
-                function success(response) {
-                    return response;
-                }
-
-                function error(response) {
-                    var status = response.status;
-                    if (status == 401) {
-                        $rootScope.redirectUrl = $location.url(); // save the current url so we can redirect the user back
-                        $rootScope.user = {};
-                        cache.remove('user');
-                        $location.path('/login');
+            var interceptor = [
+                '$q', '$location', '$rootScope', 'cache',
+                function ($q, $location, $rootScope, cache) {
+                    function success(response) {
+                        return response;
                     }
-                    return $q.reject(response);
-                }
 
-                return function (promise) {
-                    return promise.then(success, error);
-                }
-            }];
+                    function error(response) {
+                        var status = response.status;
+                        if (status == 401) {
+                            $rootScope.redirectUrl = $location.url();
+                            $rootScope.user = { };
+                            cache.remove('user');
+                            $location.path('/login');
+                        }
+                        return $q.reject(response);
+                    }
 
+                    return function (promise) {
+                        return promise.then(success, error);
+                    }
+                }
+            ];
             $httpProvider.responseInterceptors.push(interceptor);
         }]);
 })();
