@@ -8,7 +8,7 @@ var path = require('path');
 module.exports = function (env, app, config, proxy, storage, controllers, ProxyClient) {
 
     app.use('/', express.static(app.locals.public));
-    app.use(connect_timeout({ time: config.api.request_timeout }));     // request timeouts
+    //app.use(connect_timeout({ time: config.api.request_timeout }));     // request timeouts
     app.use(express.favicon());
     app.use(express.json());
     // todo: write cookie parser which set cookie secret as app session token
@@ -44,15 +44,17 @@ module.exports = function (env, app, config, proxy, storage, controllers, ProxyC
     });
 
     // redirect all others to the index (HTML5 history)
-    app.get('*', controllers.userController.isAuthenticated, controllers.viewController.index);
+    app.get('/*', controllers.userController.isAuthenticated, controllers.viewController.index);
 
     ProxyClient.init(proxy, config, storage);
 
     // #region private functions
 
     function _errorHandler(err, req, res, next) {
-        if (err.code === 401)
-            res.clearCookie("session");
+        if (err.code === 401) {
+            res.status(401);
+            return res.redirect("/login");
+        }
 
         res.status(err.code || 500);
         res.send({ error: err });

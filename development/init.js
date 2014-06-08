@@ -1,5 +1,5 @@
 /*
- *  Initialization module
+ *  Test initialization module
  */
 
 // #region dependents
@@ -42,7 +42,7 @@ function runTests(err, client, userInfo) {
                 test.run(client, userInfo, function (err) {
                     if (!err) return;
 
-                    logger.log("Test failed: " + err);
+                    logger.info("Test failed: " + err);
 
                     errors.push(err);
                 });
@@ -51,9 +51,8 @@ function runTests(err, client, userInfo) {
             callback(errors);
         }
     ], function (errors) {
-        if (errors.length) {
-            logger.log("Some tests was failed");
-        }
+        if (errors.length)
+            logger.info("Some tests was failed");
     });
 }
 

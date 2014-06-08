@@ -13,10 +13,8 @@ module.exports = function (ProxyClient, log, errors, config) {
             Client().userLogin(loginInfo.login, loginInfo.password, function (err, result) {
                 if (err) return next(err, req, res);
 
-                logger.log("User '" + loginInfo.login + "' successfully log in.");
-                res.cookie(cookieName, result.sessionId, {
-                    maxAge: result.expired, httpOnly: config.session.httpOnly, signed: true
-                });
+                logger.debug("User '" + loginInfo.login + "' successfully log in.");
+                _setCookie(res, result);
                 res.send(200, { username: result.name });
             });
         },
@@ -35,11 +33,21 @@ module.exports = function (ProxyClient, log, errors, config) {
             if (!session)
                 return next(new errors.AuthError(401));
 
-            Client().isExistSession(session, function (err, session) {
+            Client().isExistSession(session, function (err, result) {
                 if (err) return next(err);
+
+                _setCookie(res, result);
 
                 next();
             });
         }
     };
+
+    // #region private functions
+
+    function _setCookie(res, sessionInfo) {
+        res.cookie(cookieName, sessionInfo.sessionId, {
+            maxAge: sessionInfo.expired || 0, httpOnly: config.session.httpOnly, signed: true
+        });
+    }
 };

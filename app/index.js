@@ -1,3 +1,5 @@
 var train = require('./train');
 
-train(__dirname);
+train(__dirname, function (err, resolved) {
+    console.log("All dependencies are resolved.");
+});

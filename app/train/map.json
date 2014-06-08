@@ -6,14 +6,11 @@
         "logs": "../logs"
     },
     "modules": {
-        "log": {
-            "type": "single"
-        },
         "config": {
             "type": "single"
         },
-        "startup": {
-            "type": "all"
+        "log": {
+            "type": "single"
         },
         "proxy": {
             "type": "all"
@@ -24,6 +21,9 @@
         },
         "controllers": {
             "aggregateOn": "controllers",
+            "type": "all"
+        },
+        "startup": {
             "type": "all"
         }
     }

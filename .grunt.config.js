@@ -22,10 +22,6 @@ function init() {
             fs.readdirSync(gruntConfigPath).forEach(function (file) {
                 var filePath = gruntConfigPath + file;
 
-//                var stat = fs.statSync(filePath);
-//                if (stat.isDirectory())
-//                    return;
-
                 var module = require(filePath);
 
                 config[module.name] = module.config;

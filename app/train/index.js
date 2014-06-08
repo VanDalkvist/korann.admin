@@ -14,7 +14,7 @@ var moduleFactories = require('./factories');
 
 // #region initialization
 
-function train(dir) {
+function train(dir, resolved) {
     addErrorHandler();
 
     var tree = new nject.Tree();
@@ -31,7 +31,7 @@ function train(dir) {
 
     injectModules(map.modules, dir, tree);
 
-    return tree.resolve();
+    return tree.resolve(resolved);
 }
 
 // #region private methods
