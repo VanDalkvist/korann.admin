@@ -9,12 +9,6 @@
                 //turn on Html5 history mode
                 $locationProvider.html5Mode(true);
 
-                //The routes that our angular app will handle
-//                $routeProvider
-//                    .when('/', { templateUrl: '/views/index.html', controller: 'IndexCtrl' })
-//                    .when('/login', { templateUrl: '/views/shared/login.html', controller: 'LoginCtrl' })
-//                    .otherwise({ redirectTo: '/' });
-
                 $urlRouterProvider.otherwise('/main');
 
                 $stateProvider
@@ -26,7 +20,14 @@
                     })
                     .state('home.main', {
                         url: '/main',
-                        templateUrl: '/views/pages/main.html'
+                        views: {
+                            'sidebar': {
+                                templateUrl: '/views/widgets/sidebar.html'
+                            },
+                            'work': {
+                                templateUrl: '/views/pages/main.html'
+                            }
+                        }
                     })
                     .state('login', {
                         url: '/login',
