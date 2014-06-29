@@ -1,0 +1,27 @@
+.container
+    .row
+        .col-md-4
+            .logo
+                h1: a(ui-sref='dashboard.panel') Korann.Admin
+        .col-md-4(ng-if="!!user.username")
+            .row
+                .col-lg-10
+                    .input-group.form
+                        input.form-control(type='text', placeholder='Search...')
+                        span.input-group-btn: button.btn.btn-primary(type='button') Search
+        .col-md-1.pull-right(ng-if="!user.username")
+            .row
+                .col-lg-8
+                    .input-group.form
+                        .action: a.btn.btn-primary.signup(ui-sref="login") Login
+        .col-xs-2.col-sm-2.col-lg-2.col-md-2.pull-right(ng-if="!!user.username")
+            .navbar.navbar-inverse(role='banner')
+                nav.collapse.navbar-collapse.bs-navbar-collapse.navbar-right(role='navigation')
+                    ul.nav.navbar-nav
+                        li.dropdown
+                            a.dropdown-toggle(data-toggle='dropdown', style="cursor: pointer;")
+                                | Hello, {{user.username}}
+                                b.caret
+                            ul.dropdown-menu.animated.fadeInUp(role="menu")
+                                li(style="cursor: pointer;"): a Profile
+                                li(style="cursor: pointer;"): a(ng-click="logout()") Logout

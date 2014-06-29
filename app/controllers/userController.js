@@ -33,12 +33,17 @@ module.exports = function (ProxyClient, log, errors, config) {
             if (!session)
                 return next(new errors.AuthError(401));
 
-            Client().isExistSession(session, function (err, result) {
-                if (err) return next(err);
+            _setSession(Client, session, res, next);
+        },
+        getCurrentUser: function (req, res, next) {
+            var session = req.signedCookies.session;
+            if (!session)
+                return res.send(401, {});
 
-                _setCookie(res, result);
+            _setSession(Client, session, res, function (err, result) {
+                if (err) return res.send(500);
 
-                next();
+                res.send({ username: result.name });
             });
         }
     };
@@ -48,6 +53,16 @@ module.exports = function (ProxyClient, log, errors, config) {
     function _setCookie(res, sessionInfo) {
         res.cookie(cookieName, sessionInfo.sessionId, {
             maxAge: sessionInfo.expired || 0, httpOnly: config.session.httpOnly, signed: true
+        });
+    }
+
+    function _setSession(Client, session, res, next) {
+        Client().isExistSession(session, function (err, result) {
+            if (err) return next(err);
+
+            _setCookie(res, result);
+
+            next(null, result);
         });
     }
 };

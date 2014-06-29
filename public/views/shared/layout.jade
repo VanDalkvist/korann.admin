@@ -8,36 +8,9 @@ html(ng-app="korann.admin")
 
         base(href="/")
 
-body(ng-controller="MainCtrl")
-    .header
-        .container
-            .row
-                .col-md-4
-                    .logo
-                        h1: a(ui-sref='') Korann.Admin
-                .col-md-4(ng-if="!!user.username")
-                    .row
-                        .col-lg-10
-                            .input-group.form
-                                input.form-control(type='text', placeholder='Search...')
-                                span.input-group-btn: button.btn.btn-primary(type='button') Search
-                .col-md-1.pull-right(ng-if="!user.username")
-                    .row
-                        .col-lg-8
-                            .input-group.form
-                                .action: a.btn.btn-primary.signup(ui-sref="/login") Login
-                .col-md-2.pull-right(ng-if="!!user.username")
-                    .navbar.navbar-inverse(role='banner')
-                        nav.collapse.navbar-collapse.bs-navbar-collapse.navbar-right(role='navigation')
-                            ul.nav.navbar-nav
-                                li.dropdown
-                                    a.dropdown-toggle(href='#', data-toggle='dropdown')
-                                        | Hello, {{user.username}}
-                                        b.caret
-                                    ul.dropdown-menu.animated.fadeInUp(role="menu")
-                                        li: a Profile
-                                        li: a(ui-sref='/login', ng-click="logout()") Logout
+    body(ng-controller="MainController")
+        .header(ng-include="'/views/shared/header.html'")
 
-    .page-content(ui-view)
+        .page-content(ui-view)
 
-    include ../internal/references
+        include ../internal/references

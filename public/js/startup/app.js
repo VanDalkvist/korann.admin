@@ -11,9 +11,14 @@
     app.run([
         '$rootScope', '$state', 'userService',
         function ($rootScope, $state, userService) {
-            var currentUser = userService.current();
 
-            if (!currentUser) delete $rootScope.user;
+            userService.current().then(function (result) {
+                if (!result) return;
+
+                $rootScope.user = {
+                    username: result.username
+                };
+            });
         }
     ]);
 })();

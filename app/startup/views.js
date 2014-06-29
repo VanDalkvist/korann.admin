@@ -16,7 +16,10 @@ module.exports = function (app, env, log) {
     app.locals({
         public: path.join(env.root, env.locations.public),
         views: path.join(env.root, env.locations.views),
-        shared: path.join(env.root, env.locations.shared)
+        shared: path.join(env.root, env.locations.shared),
+        layouts: path.join(env.root, env.locations.layouts),
+        pages: path.join(env.root, env.locations.pages),
+        widgets: path.join(env.root, env.locations.widgets)
     });
 
     logger.debug("app.locals.public = '%j'", util.inspect(app.locals.public));

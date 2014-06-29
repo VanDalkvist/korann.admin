@@ -4,7 +4,7 @@
             .box
                 .content-wrap
                     h6 Sign In
-                    form(name="loginForm", ng-submit="submit()")
+                    form(name="loginForm", ng-submit="login()")
                         input.form-control(type='text', ng-model="model.login", required, placeholder='Login')
                         input.form-control(type='password', ng-model="model.password", required, placeholder='Password')
                         .form-group: label.control-label.red(ng-show="model.error") {{model.error}}

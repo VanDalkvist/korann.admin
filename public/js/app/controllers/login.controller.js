@@ -3,7 +3,7 @@
 
     //
     app.classy.controller({
-        name: 'LoginCtrl',
+        name: 'LoginController',
         inject: ['$rootScope', '$scope', 'userService', '$location'],
 
         // #region model
@@ -22,7 +22,7 @@
 
         // #region public functions
 
-        submit: function () {
+        login: function () {
             this.userService
                 .login(this.$.model.login, this.$.model.password)
                 .then(this._loginSuccess, this._loginFailure);

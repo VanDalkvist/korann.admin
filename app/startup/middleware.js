@@ -23,13 +23,16 @@ module.exports = function (env, app, config, proxy, storage, controllers, ProxyC
 
     app.get('/', controllers.viewController.index);
     app.get('/login', controllers.viewController.index);
+    app.get('/user/session', controllers.userController.getCurrentUser);
 
     app.post('/user/login', controllers.userController.login);
     app.post('/user/logout', controllers.userController.isAuthenticated, controllers.userController.logout);
 
     app.get('/views/shared/:name', controllers.viewController.view(app.locals.shared));
 
-    app.get('/views/:name', controllers.userController.isAuthenticated, controllers.viewController.view(app.locals.views));
+    app.get('/views/layouts/:name', controllers.userController.isAuthenticated, controllers.viewController.view(app.locals.layouts));
+    app.get('/views/pages/:name', controllers.userController.isAuthenticated, controllers.viewController.view(app.locals.pages));
+    app.get('/views/widgets/:name', controllers.userController.isAuthenticated, controllers.viewController.view(app.locals.widgets));
 
     //whenever a router parameter :model is matched, this is run
     app.param('model', function (req, res, next, model) {
@@ -52,7 +55,6 @@ module.exports = function (env, app, config, proxy, storage, controllers, ProxyC
 
     function _errorHandler(err, req, res, next) {
         if (err.code === 401) {
-            res.status(401);
             return res.redirect("/login");
         }
 

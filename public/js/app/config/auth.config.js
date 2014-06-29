@@ -20,7 +20,7 @@
 
                     function error(response) {
                         var status = response.status;
-                        if (status == 401) {
+                        if (status == 401 || status == 403) {
                             $rootScope.redirectUrl = $location.url();
                             $rootScope.user = { };
                             cache.remove('user');

@@ -2,8 +2,9 @@
     'use strict';
 
     angular.module('korann.user', ['korann.cache'])
-        .service('userService', ['$http', '$location', 'cache',
-            function ($http, $location, cache) {
+        .service('userService', [
+            '$http', '$location', 'cache', '$state',
+            function ($http, $location, cache, $state) {
 
                 // #region initialization
 
@@ -16,11 +17,17 @@
                 // #region private functions
 
                 function _get() {
-                    var user = cache.get("user");
+                    return $http.get('/user/session').then(function (res) {
+                        if (res) {
+                            cache.put("user", res);
+                            return res;
+                        }
 
-                    if (user) return user;
+                        cache.remove("user");
+                        $state.go("login");
 
-                    $location.path("/login");
+                        return res;
+                    });
                 }
 
                 function _login(login, password) {
@@ -38,5 +45,6 @@
                         cache.remove("user");
                     });
                 }
-            }]);
+            }
+        ]);
 })();

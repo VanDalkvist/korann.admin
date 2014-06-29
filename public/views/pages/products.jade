@@ -1,0 +1,9 @@
+.row
+    div(ng-repeat='product in model.products')
+        .col-xs-4.col-sm-4.col-md-4.col-lg-4
+            .thumbnail
+                img.img-responsive(src='img/thumb.jpg', alt='')
+                .caption
+                    h3: | {{ product.id }}. {{ product.name }}
+                    p: | {{ product.description }}
+                    p: a.btn.btn-primary(href='#') Edit
