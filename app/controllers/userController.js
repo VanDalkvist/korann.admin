@@ -38,7 +38,7 @@ module.exports = function (ProxyClient, log, errors, config) {
         getCurrentUser: function (req, res, next) {
             var session = req.signedCookies.session;
             if (!session)
-                return res.send(401, {});
+                return res.send(401, { });
 
             _setSession(Client, session, res, function (err, result) {
                 if (err) return res.send(500);

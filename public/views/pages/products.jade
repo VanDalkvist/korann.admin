@@ -6,4 +6,4 @@
                 .caption
                     h3: | {{ product.id }}. {{ product.name }}
                     p: | {{ product.description }}
-                    p: a.btn.btn-primary(href='#') Edit
+                    p: a.btn.btn-primary(ui-sref='product-edit({ id: product.id })') Edit

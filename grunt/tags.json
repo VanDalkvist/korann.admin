@@ -13,7 +13,7 @@
                 "<%= meta.js %>startup/**/*.js",
                 "<%= meta.js %>app/**/*.js"
             ],
-            "dest": "<%= meta.views %>/internal/references.jade"
+            "dest": "<%= meta.views %>internal/references.jade"
         },
         "css": {
             "options": {
@@ -25,7 +25,7 @@
                 "<%= meta.dependencies.css %>",
                 "<%= meta.client %>css/*.css"
             ],
-            "dest": "<%= meta.views %>/internal/css.jade"
+            "dest": "<%= meta.views %>internal/css.jade"
         }
     }
 }

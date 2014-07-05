@@ -5,7 +5,7 @@
 // #region dependents
 
 var rest = require('restler');
-var _ = require('underscore');
+var _ = require('lodash');
 
 module.exports = function init(config, log, events, scheme, errors) {
     // #region initialization
@@ -24,10 +24,11 @@ module.exports = function init(config, log, events, scheme, errors) {
         create: _create,
         update: _update,
         remove: _remove,
-        read: _read
+        read: _read,
+        readAll: _readAll
     };
 
-    var instance = {};
+    var instance = { };
 
     return rest.service(_constructor, options, actions);
 
@@ -54,7 +55,9 @@ module.exports = function init(config, log, events, scheme, errors) {
             var storage = instance.defaults.storage;
 
             storage.saveAppToken(data.token);
-            if (data.sessions && data.sessions.length) storage.init(data.sessions, "_id", "context");
+            if (data.sessions && data.sessions.length) {
+                storage.init(data.sessions, "_id", "context");
+            }
 
             logger.debug("Access token for application '" + instance.defaults.appId + "' was saved in storage.");
 
@@ -109,7 +112,9 @@ module.exports = function init(config, log, events, scheme, errors) {
         instance.defaults.storage.getSession(session, function (err, session) {
             if (err) done(err);
 
-            if (!session) return done(new errors.AuthError(401, "Session not found"));
+            if (!session) {
+                return done(new errors.AuthError(401, "Session not found"));
+            }
 
             return done(null, session);
         });
@@ -147,6 +152,16 @@ module.exports = function init(config, log, events, scheme, errors) {
 
     function _read(modelName, query, sessionId, done) {
         sendAuthenticatedRequest('get', modelName, { query: query }, successCallback, sessionId, done);
+
+        function successCallback(result) {
+            logger.debug("Response received successfully. Data is: \n", result, " \n");
+
+            if (done) done(null, result);
+        }
+    }
+
+    function _readAll(modelName, query, sessionId, done) {
+        sendAuthenticatedRequest('get', modelName, {}, successCallback, sessionId, done);
 
         function successCallback(result) {
             logger.debug("Response received successfully. Data is: \n", result, " \n");

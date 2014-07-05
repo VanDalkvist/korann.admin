@@ -6,45 +6,70 @@ module.exports = function (ProxyClient, log) {
         return ProxyClient.Instance();
     }
 
+    // todo: jsonp???
+
     /*
-     Generic CRUD functions for any model
+     Generic CRUD operations for any model
      */
-    controller.get = function (req, res, next) {
+
+    controller.model = function (req, res, next, model) {
+        if (!model)
+            return next(new Error("Model param is required"));
+
+        if (!_.has(scheme, model))
+            return next(new Error("Invalid model name"));
+
+        req.model = model;
+        next();
+    };
+
+    controller.get = function (req, res) {
         var query = req.query;
 
-        Client().read(req.params.model, query, function (err, data) {
+        Client().read(req.model, query, req.signedCookies.session, function (err, data) {
+            // todo: remove 'next'
             if (err) return next(err);
 
             return res.json(data);
         });
     };
 
-    controller.create = function (req, res, next) {
+    controller.getAll = function (req, res) {
+        Client().read(req.model, {}, req.signedCookies.session, function (err, data) {
+            // todo: remove 'next'
+            if (err) return next(err);
+
+            return res.json(data);
+        });
+    };
+
+    controller.create = function (req, res) {
         var model = req.body;
 
-        console.log(model);
-
-        Client().create(req.params.model, model, function (err, data) {
+        Client().create(req.model, model, req.signedCookies.session, function (err, data) {
+            // todo: remove 'next'
             if (err) return next(err);
 
             return res.json(data);
         });
     };
 
-    controller.update = function (req, res, next) {
+    controller.update = function (req, res) {
         var model = req.body;
 
-        Client().update(req.params.model, model, function (err, data) {
+        Client().update(req.model, model, req.signedCookies.session, function (err, data) {
+            // todo: remove 'next'
             if (err) return next(err);
 
             return res.json(data);
         });
     };
 
-    controller.remove = function (req, res, next) {
+    controller.remove = function (req, res) {
         var query = req.query;
 
-        Client().remove(req.params.model, query, function (err, data) {
+        Client().remove(req.model, query, req.signedCookies.session, function (err, data) {
+            // todo: remove 'next'
             if (err) return next(err);
 
             return res.json(data);

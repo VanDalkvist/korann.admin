@@ -4,20 +4,15 @@
     //
     app.classy.controller({
         name: 'LoginController',
-        inject: ['$rootScope', '$scope', 'userService', '$location'],
+        inject: [ '$rootScope', '$scope', 'userService', '$log', '$state', 'settings' ],
 
         // #region model
 
-        model: {
-            login: "",
-            password: "",
-            error: ""
-        },
+        model: { login: "", password: "", error: "" },
 
         // #region initialization
 
         init: function () {
-
         },
 
         // #region public functions
@@ -28,15 +23,15 @@
                 .then(this._loginSuccess, this._loginFailure);
         },
 
-        // #region public functions
+        // #region private functions
 
         _loginSuccess: function (result) {
-            console.log("Login successful!");
+            this.$log.debug("Login successful!");
             this.$rootScope.user = angular.extend({}, result);
-            this.$location.path("/");
+            this.$state.go(this.settings.mainState);
         },
         _loginFailure: function (error) {
-            console.log("Login failed! Error is ", error);
+            this.$log.debug("Login failed! Error is ", error);
             this.$.model.error = error.message;
         }
     });

@@ -1,7 +1,7 @@
 (function () {
     'use strict';
 
-    angular.module('korann.cache', [])
+    ng.module('korann.cache', [])
         .provider('cache', function () {
 
             // #region initialization

@@ -4,45 +4,19 @@
     // 
     app.classy.controller({
         name: 'ProductsController',
-        inject: ['$scope'],
+        inject: [ '$scope', 'Products' ],
 
         // #region model
 
         model: {
-//            products:
+            products: []
         },
 
         // #region initialization
 
         init: function () {
             this.$.model = {
-                products: [
-                    {
-                        id: '1',
-                        name: 'Масло',
-                        description: 'Hello, Масло!'
-                    },
-                    {
-                        id: '2',
-                        name: 'Шампунь',
-                        description: 'Hello, Шампунь!'
-                    },
-                    {
-                        id: '3',
-                        name: 'Крем',
-                        description: 'Hello, Крем!'
-                    },
-                    {
-                        id: '4',
-                        name: 'Маска',
-                        description: 'Hello, Маска!'
-                    },
-                    {
-                        id: '5',
-                        name: 'Зубная паста',
-                        description: 'Hello, Зубная паста!'
-                    }
-                ]
+                products: this.Products.query()
             };
         }
 

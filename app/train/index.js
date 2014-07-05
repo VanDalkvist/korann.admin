@@ -6,7 +6,7 @@
 
 var express = require('express');
 var path = require('path');
-var _ = require('underscore');
+var _ = require('lodash');
 var nject = require('nject');
 var map = require('./map');
 
@@ -23,10 +23,7 @@ function train(dir, resolved) {
 
     initConstants(tree, {
         app: express(),
-        env: {
-            root: dir,
-            locations: map.locations
-        }
+        env: { root: dir, locations: map.locations }
     });
 
     injectModules(map.modules, dir, tree);

@@ -1,58 +1,61 @@
-var express = require('express');
-var trace = require('express-trace');
-var connect_timeout = require('connect-timeout');
+var _ = require('lodash');
 var path = require('path');
+var express = require('express');
+var routesLogger = require('morgan');
+var favicon = require('serve-favicon');
+var bodyParser = require('body-parser');
+var cookieParser = require('cookie-parser');
+var expressValidator = require('express-validator');
+var methodOverride = require('method-override');
+//var connect_timeout = require('connect-timeout');
 
-// Middleware stack for all requests
+module.exports = function (env, app, config, proxy, storage, controllers, ProxyClient, api) {
 
-module.exports = function (env, app, config, proxy, storage, controllers, ProxyClient) {
-
-    app.use('/', express.static(app.locals.public));
-    //app.use(connect_timeout({ time: config.api.request_timeout }));     // request timeouts
-    app.use(express.favicon());
-    app.use(express.json());
+    app.use(favicon(path.join(app.locals.public, 'favicon.ico')));
+    app.use(bodyParser.json());             // req.body & req.files
+    app.use(bodyParser.urlencoded({ extended: true }));
+    app.use(expressValidator());
+    app.use(methodOverride());              // '_method' property in body (POST -> DELETE / PUT)
+    app.use(cookieParser(config.seance.cookieSecret));      // req.cookies and req.signedCookies
+    app.use(express.static(app.locals.public));
     // todo: write cookie parser which set cookie secret as app session token
-    app.use(express.cookieParser(config.seance.cookieSecret));                                    // req.cookies and req.signedCookies
-    app.use(express.bodyParser());                                      // req.body & req.files
-    app.use(express.methodOverride());                                  // '_method' property in body (POST -> DELETE / PUT)
-    app.use(app.router);
+    app.use(routesLogger('dev'));
 
-    // Errors
-    trace(app);
-    app.use(_errorHandler);
+    //app.use(connect_timeout({ time: config.api.request_timeout }));     // request timeouts
+
+    var isAuthenticated = controllers.userController.isAuthenticated;
+
+    // Base Routing
 
     app.get('/', controllers.viewController.index);
     app.get('/login', controllers.viewController.index);
     app.get('/user/session', controllers.userController.getCurrentUser);
 
     app.post('/user/login', controllers.userController.login);
-    app.post('/user/logout', controllers.userController.isAuthenticated, controllers.userController.logout);
+    app.post('/user/logout', isAuthenticated, controllers.userController.logout);
 
     app.get('/views/shared/:name', controllers.viewController.view(app.locals.shared));
 
-    app.get('/views/layouts/:name', controllers.userController.isAuthenticated, controllers.viewController.view(app.locals.layouts));
-    app.get('/views/pages/:name', controllers.userController.isAuthenticated, controllers.viewController.view(app.locals.pages));
-    app.get('/views/widgets/:name', controllers.userController.isAuthenticated, controllers.viewController.view(app.locals.widgets));
+    app.get('/views/layouts/:name', isAuthenticated, controllers.viewController.view(app.locals.layouts));
+    app.get('/views/pages/:name', isAuthenticated, controllers.viewController.view(app.locals.pages));
+    app.get('/views/widgets/:name', isAuthenticated, controllers.viewController.view(app.locals.widgets));
 
-    //whenever a router parameter :model is matched, this is run
-    app.param('model', function (req, res, next, model) {
-//        console.log(app);
-//        var Model = app.models[model];
-//        if (Model === undefined) {
-//            //if the request is for a model that does not exist, 404
-//            return res.send(404);
-//        }
-//        req.Model = Model;
-//        return next();
+    app.all('*', function (req, res, next) {
+        if (req.originalUrl.indexOf('/api') > -1) {
+            return next();
+        }
+
+        res.sendfile(app.locals.shared + '/layout.html');
     });
 
-    // redirect all others to the index (HTML5 history)
-    app.get('/*', controllers.userController.isAuthenticated, controllers.viewController.index);
+    app.use('/api', api);
+    app.use(_errorHandler);
 
     ProxyClient.init(proxy, config, storage);
 
     // #region private functions
 
+    // todo: move error handler
     function _errorHandler(err, req, res, next) {
         if (err.code === 401) {
             return res.redirect("/login");

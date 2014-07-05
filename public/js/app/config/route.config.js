@@ -3,8 +3,8 @@
 
     angular.module('korann.config.route')
         .config([
-            '$routeProvider', '$locationProvider', '$stateProvider', '$urlRouterProvider',
-            function ($routeProvider, $locationProvider, $stateProvider, $urlRouterProvider) {
+            '$locationProvider', '$stateProvider', '$urlRouterProvider',
+            function ($locationProvider, $stateProvider, $urlRouterProvider) {
 
                 //turn on Html5 history mode
                 $locationProvider.html5Mode(true);
@@ -12,7 +12,7 @@
                 $urlRouterProvider.otherwise('/dashboard/panel');
 
                 $stateProvider
-                    .state('main', {
+                    .state('root', {
                         url: '',
                         abstract: true,
                         templateUrl: '/views/layouts/board.html'
@@ -21,7 +21,7 @@
                 $stateProvider
                     .state('dashboard', {
                         url: '/dashboard',
-                        parent: 'main',
+                        parent: 'root',
                         abstract: true,
                         controller: 'IndexController',
                         views: {
@@ -39,7 +39,7 @@
                         views: {
                             'work@dashboard': {
                                 templateUrl: '/views/pages/welcome.html',
-                                controller: 'IndexController'
+                                controller: 'DashboardController'
                             }
                         }
                     })

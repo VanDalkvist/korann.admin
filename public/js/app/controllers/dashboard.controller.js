@@ -3,7 +3,7 @@
 
     //
     app.classy.controller({
-        name: 'IndexController',
+        name: 'DashboardController',
         inject: ['$scope'],
 
         // #region model

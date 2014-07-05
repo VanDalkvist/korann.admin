@@ -4,7 +4,7 @@
 
 // #region dependents
 
-var _ = require('underscore');
+var _ = require('lodash');
 
 // #region initialization
 

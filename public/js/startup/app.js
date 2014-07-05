@@ -2,11 +2,12 @@
     'use strict';
 
     var app = angular.module('korann.admin', [
-        'ngRoute', 'ngCookies', 'classy', 'ui.router',
-        'korann.user', 'korann.config'
+        'ngResource', 'ngCookies', 'classy', 'ui.router',
+        'korann.user', 'korann.config', 'korann.products'
     ]);
 
     window.app = app;
+    window.ng = angular;
 
     app.run([
         '$rootScope', '$state', 'userService',

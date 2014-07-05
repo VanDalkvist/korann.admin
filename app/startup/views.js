@@ -1,9 +1,9 @@
 var path = require('path');
 var jade = require('jade');
 var util = require('util');
+var _ = require('lodash');
 
 module.exports = function (app, env, log) {
-
     var logger = log.getLogger(module);
 
     app.set('views', path.join(env.root, env.locations.shared));
@@ -11,9 +11,10 @@ module.exports = function (app, env, log) {
 
     app.engine('.html', jade.__express);
 
-    logger.debug("env.root = '%s'; env.locations = '%j'", env.root, util.inspect(env.locations));
+    logger.debug("\nenv.root = '%s';\n", env.root, "env.locations = ", util.inspect(env.locations));
 
-    app.locals({
+    // todo: simplify
+    _.extend(app.locals, {
         public: path.join(env.root, env.locations.public),
         views: path.join(env.root, env.locations.views),
         shared: path.join(env.root, env.locations.shared),
@@ -22,5 +23,5 @@ module.exports = function (app, env, log) {
         widgets: path.join(env.root, env.locations.widgets)
     });
 
-    logger.debug("app.locals.public = '%j'", util.inspect(app.locals.public));
+    logger.debug("app.locals.public = ", app.locals.public);
 };
