@@ -154,7 +154,7 @@ module.exports = function init(config, log, events, scheme, errors) {
         sendAuthenticatedRequest('get', modelName, { query: query }, successCallback, sessionId, done);
 
         function successCallback(result) {
-            logger.debug("Response received successfully. Data is: \n", result, " \n");
+            logger.debug("Response received successfully. \n");
 
             if (done) done(null, result);
         }
@@ -164,7 +164,7 @@ module.exports = function init(config, log, events, scheme, errors) {
         sendAuthenticatedRequest('get', modelName, {}, successCallback, sessionId, done);
 
         function successCallback(result) {
-            logger.debug("Response received successfully. Data is: \n", result, " \n");
+            logger.debug("Response received successfully. \n");
 
             if (done) done(null, result);
         }

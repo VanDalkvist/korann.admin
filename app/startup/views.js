@@ -13,15 +13,9 @@ module.exports = function (app, env, log) {
 
     logger.debug("\nenv.root = '%s';\n", env.root, "env.locations = ", util.inspect(env.locations));
 
-    // todo: simplify
-    _.extend(app.locals, {
-        public: path.join(env.root, env.locations.public),
-        views: path.join(env.root, env.locations.views),
-        shared: path.join(env.root, env.locations.shared),
-        layouts: path.join(env.root, env.locations.layouts),
-        pages: path.join(env.root, env.locations.pages),
-        widgets: path.join(env.root, env.locations.widgets)
-    });
+    _.extend(app.locals, _.mapValues(env.locations, function (location) {
+        return path.join(env.root, location);
+    }));
 
     logger.debug("app.locals.public = ", app.locals.public);
 };

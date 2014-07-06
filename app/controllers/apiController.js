@@ -1,5 +1,7 @@
-module.exports = function (ProxyClient, log) {
-    var controller = {};
+var _ = require('lodash');
+
+module.exports = function (ProxyClient, log, scheme) {
+    var controller = { };
     var logger = log.getLogger(module);
 
     function Client() {
