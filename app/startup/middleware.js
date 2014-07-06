@@ -1,15 +1,14 @@
-var _ = require('lodash');
 var path = require('path');
 var express = require('express');
 var routesLogger = require('morgan');
 var favicon = require('serve-favicon');
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
-var expressValidator = require('express-validator');
 var methodOverride = require('method-override');
+var expressValidator = require('express-validator');
 //var connect_timeout = require('connect-timeout');
 
-module.exports = function (env, app, config, proxy, storage, controllers, ProxyClient, api) {
+module.exports = function (app, config, proxy, storage, controllers, ProxyClient, api, common) {
 
     app.use(favicon(path.join(app.locals.public, 'favicon.ico')));
     app.use(bodyParser.json());             // req.body & req.files
@@ -40,28 +39,11 @@ module.exports = function (env, app, config, proxy, storage, controllers, ProxyC
     app.get('/views/pages/:name', isAuthenticated, controllers.viewController.view(app.locals.pages));
     app.get('/views/widgets/:name', isAuthenticated, controllers.viewController.view(app.locals.widgets));
 
-    app.all('*', function (req, res, next) {
-        if (req.originalUrl.indexOf('/api') > -1) {
-            return next();
-        }
-
-        res.sendfile(app.locals.shared + '/layout.html');
-    });
+    app.all('*', common.request);
 
     app.use('/api', api);
-    app.use(_errorHandler);
+
+    app.use(common.errorHandler);
 
     ProxyClient.init(proxy, config, storage);
-
-    // #region private functions
-
-    // todo: move error handler
-    function _errorHandler(err, req, res, next) {
-        if (err.code === 401) {
-            return res.redirect("/login");
-        }
-
-        res.status(err.code || 500);
-        res.send({ error: err });
-    }
 };
