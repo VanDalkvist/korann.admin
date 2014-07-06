@@ -25,53 +25,48 @@ module.exports = function (ProxyClient, log, scheme) {
         next();
     };
 
-    controller.get = function (req, res) {
+    controller.get = function (req, res, next) {
         var query = req.query;
 
         Client().read(req.model, query, req.signedCookies.session, function (err, data) {
-            // todo: remove 'next'
             if (err) return next(err);
 
             return res.json(data);
         });
     };
 
-    controller.getAll = function (req, res) {
-        Client().read(req.model, {}, req.signedCookies.session, function (err, data) {
-            // todo: remove 'next'
+    controller.getAll = function (req, res, next) {
+        Client().read(req.model, { }, req.signedCookies.session, function (err, data) {
             if (err) return next(err);
 
             return res.json(data);
         });
     };
 
-    controller.create = function (req, res) {
+    controller.create = function (req, res, next) {
         var model = req.body;
 
         Client().create(req.model, model, req.signedCookies.session, function (err, data) {
-            // todo: remove 'next'
             if (err) return next(err);
 
             return res.json(data);
         });
     };
 
-    controller.update = function (req, res) {
+    controller.update = function (req, res, next) {
         var model = req.body;
 
         Client().update(req.model, model, req.signedCookies.session, function (err, data) {
-            // todo: remove 'next'
             if (err) return next(err);
 
             return res.json(data);
         });
     };
 
-    controller.remove = function (req, res) {
+    controller.remove = function (req, res, next) {
         var query = req.query;
 
         Client().remove(req.model, query, req.signedCookies.session, function (err, data) {
-            // todo: remove 'next'
             if (err) return next(err);
 
             return res.json(data);
