@@ -8,11 +8,7 @@ module.exports = function (ProxyClient, log, scheme) {
         return ProxyClient.Instance();
     }
 
-    // todo: jsonp???
-
-    /*
-     Generic CRUD operations for any model
-     */
+    // Generic CRUD operations for any model
 
     controller.model = function (req, res, next, model) {
         if (!model)
@@ -22,56 +18,39 @@ module.exports = function (ProxyClient, log, scheme) {
             return next(new Error("Invalid model name"));
 
         req.model = model;
+        logger.debug("API Model parsed: ", model);
         next();
     };
 
     controller.get = function (req, res, next) {
-        var query = req.query;
-
-        Client().read(req.model, query, req.signedCookies.session, function (err, data) {
-            if (err) return next(err);
-
-            return res.json(data);
-        });
+        Client().read(req.model, req.query, req.signedCookies.session, _getDataRequestCallback(res, next));
     };
 
     controller.getAll = function (req, res, next) {
-        Client().read(req.model, { }, req.signedCookies.session, function (err, data) {
-            if (err) return next(err);
-
-            return res.json(data);
-        });
+        Client().read(req.model, { }, req.signedCookies.session, _getDataRequestCallback(res, next));
     };
 
     controller.create = function (req, res, next) {
-        var model = req.body;
-
-        Client().create(req.model, model, req.signedCookies.session, function (err, data) {
-            if (err) return next(err);
-
-            return res.json(data);
-        });
+        Client().create(req.model, req.body, req.signedCookies.session, _getDataRequestCallback(res, next));
     };
 
     controller.update = function (req, res, next) {
-        var model = req.body;
-
-        Client().update(req.model, model, req.signedCookies.session, function (err, data) {
-            if (err) return next(err);
-
-            return res.json(data);
-        });
+        Client().update(req.model, req.body, req.signedCookies.session, _getDataRequestCallback(res, next));
     };
 
     controller.remove = function (req, res, next) {
-        var query = req.query;
+        Client().remove(req.model, req.query, req.signedCookies.session, _getDataRequestCallback(res, next));
+    };
 
-        Client().remove(req.model, query, req.signedCookies.session, function (err, data) {
+    // #region private functions
+
+    function _getDataRequestCallback(res, next) {
+        return function (err, data) {
             if (err) return next(err);
 
             return res.json(data);
-        });
-    };
+        };
+    }
 
     return controller;
 };
