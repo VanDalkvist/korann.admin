@@ -1,0 +1,13 @@
+.modal-header
+    h4.modal-title
+        span.glyphicon.glyphicon-star
+        | Product
+.modal-body
+    ng-form(name='createFormDialog', novalidate='', role='form')
+        .form-group.input-group-lg(ng-class='{"has-error": createFormDialog.username.$dirty && createFormDialog.username.$invalid}')
+            label.control-label(for='username') Наименование:
+            input#username.form-control(type='text', name='username', ng-model='product.name', ng-keyup='hitEnter($event)', required)
+            span.help-block Enter your full name, first & last.
+.modal-footer
+    button.btn.btn-default(type='button', ng-click='cancel()') Cancel
+    button.btn.btn-primary(type='button', ng-click='save()', ng-disabled='(createFormDialog.$dirty && createFormDialog.$invalid) || createFormDialog.$pristine') Save

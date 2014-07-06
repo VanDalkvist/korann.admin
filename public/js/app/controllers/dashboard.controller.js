@@ -1,25 +1,19 @@
 (function (app) {
     'use strict';
 
-    //
-    app.classy.controller({
-        name: 'DashboardController',
-        inject: ['$scope'],
+    app.controller('DashboardController', [
+        '$scope',
+        function ($scope) {
 
-        // #region model
-        model: {
+            // #region model
+            $scope.model = { };
 
-        },
+            // #region initialization
 
-        // #region initialization
+            // #region public functions
 
-        init: function () {
+            // #region private functions (_ prefixed)
 
         }
-
-        // #region public functions
-
-        // #region private functions (_ prefixed)
-
-    });
+    ]);
 })(app);

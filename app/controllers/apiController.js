@@ -27,7 +27,7 @@ module.exports = function (ProxyClient, log, scheme) {
     };
 
     controller.getAll = function (req, res, next) {
-        Client().read(req.model, { }, req.signedCookies.session, _getDataRequestCallback(res, next));
+        Client().readAll(req.model, { }, req.signedCookies.session, _getDataRequestCallback(res, next));
     };
 
     controller.create = function (req, res, next) {

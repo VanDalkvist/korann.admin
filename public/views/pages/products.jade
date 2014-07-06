@@ -1,9 +1,17 @@
-.row
-    div(ng-repeat='product in model.products')
-        .col-xs-4.col-sm-4.col-md-4.col-lg-4
-            .thumbnail
-                img.img-responsive(src='img/thumb.jpg', alt='')
-                .caption
-                    h3: | {{ product.id }}. {{ product.name }}
-                    p: | {{ product.description }}
-                    p: a.btn.btn-primary(ui-sref='product-edit({ id: product.id })') Edit
+.products
+    .row.toolbar
+        .btn-group.btn-group-lg
+            button.btn.btn-default(ng-click="refresh()") Обновить
+            button.btn.btn-default(ng-click="new()") Создать
+    .row
+        //.col-md-11
+        div(ng-repeat='product in model.products')
+            .col-xs-4.col-sm-4.col-md-4.col-lg-4
+                .thumbnail
+                    img.img-responsive(src='img/thumb.jpg', alt='')
+                    .caption
+                        p: | {{ product._id }}
+                        h3: | Наименование: {{ product.name }}
+                        p: | Описание: {{ product.desc }}
+                        p: | Цена: {{ product.price }}
+                        p: a.btn.btn-primary(ui-sref='product-edit({ id: product.id })') Edit

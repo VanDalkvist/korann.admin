@@ -161,7 +161,7 @@ module.exports = function init(config, log, events, scheme, errors) {
     }
 
     function _readAll(modelName, query, sessionId, done) {
-        sendAuthenticatedRequest('get', modelName, {}, successCallback, sessionId, done);
+        sendAuthenticatedRequest('get', modelName, query, successCallback, sessionId, done);
 
         function successCallback(result) {
             logger.debug("Response received successfully. \n");
