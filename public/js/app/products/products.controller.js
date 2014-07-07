@@ -30,6 +30,8 @@
         },
         edit: function (product) {
             this.$modal.open({
+                templateUrl: '/views/widgets/product-edit.html',
+                controller: 'ModalInstanceCtrl',
                 resolve: {
                     data: function () {
                         return ng.copy(product);
@@ -42,13 +44,20 @@
         },
         new: function () {
             var model = this.$.createModel = new this.Product();
-            this.$modal.open({
+            var modalInstance = this.$modal.open({
                 templateUrl: '/views/widgets/product-edit.html',
+                controller: 'ModalInstanceCtrl',
                 resolve: {
                     data: function () {
                         return model;
                     }
                 }
+            });
+
+            modalInstance.result.then(function (selectedItem) {
+//                $scope.selected = selectedItem;
+            }, function () {
+//                $log.info('Modal dismissed at: ' + new Date());
             });
         },
         create: function () {
@@ -59,3 +68,16 @@
 
     });
 })(app);
+
+var ModalInstanceCtrl = function ($scope, $modalInstance, data) {
+
+    $scope.model = data;
+
+    $scope.ok = function () {
+        $modalInstance.close();
+    };
+
+    $scope.cancel = function () {
+        $modalInstance.dismiss('cancel');
+    };
+};
