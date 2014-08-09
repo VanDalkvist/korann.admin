@@ -1,16 +1,19 @@
 .modal-header
-    h4.modal-title
-        span.glyphicon.glyphicon-star
-        | Product
-.modal-body
-    ng-form(name='createFormDialog', novalidate='', role='form')
-        .form-group.input-group-lg(ng-class='{"has-error": createFormDialog.username.$dirty && createFormDialog.username.$invalid}')
-            label.control-label(for='name') Наименование:
-            input#name.form-control(type='text', name='name', ng-model='model.name', ng-keyup='hitEnter($event)', required)
-            label.control-label(for='desc') Описание:
-            input#desc.form-control(type='text', name='desc', ng-model='model.desc', ng-keyup='hitEnter($event)', required)
-            label.control-label(for='price') Цена:
-            input#desc.form-control(type='text', name='price', ng-model='model.price', ng-keyup='hitEnter($event)', required)
-.modal-footer
-    button.btn.btn-default(type='button', ng-click='cancel()') Cancel
-    button.btn.btn-primary(type='button', ng-click='save()', ng-disabled='(createFormDialog.$dirty && createFormDialog.$invalid) || createFormDialog.$pristine') Сохранить
+    h4.modal-title(ng-if) Создание товара
+    h4.modal-title Создание товара
+        //span.glyphicon.glyphicon-star
+        //| Product
+    .modal-body
+        ng-form(name='createFormDialog', role='form', novalidate)
+            .form-group.input-group-lg(ng-class='{"has-error": createFormDialog.username.$dirty && createFormDialog.username.$invalid}')
+                label.control-label(for='name') Наименование:
+                input#name.form-control(type='text', name='name', ng-model='model.name', ng-keyup='hitEnter($event)', required)
+                label.control-label(for='desc') Описание:
+                input#desc.form-control(type='text', name='desc', ng-model='model.desc', ng-keyup='hitEnter($event)', required)
+                label.control-label(for='price') Цена:
+                input#price.form-control(type='number', name='price', ng-model='model.price', ng-keyup='hitEnter($event)', required, min='0', max='10000')
+                label.control-label(for='category') Категория:
+                select#category.form-control(type='number', name='category', ng-options='category from categories', ng-keyup='hitEnter($event)', required)
+    .modal-footer
+        button.btn.btn-default(type='button', ng-click='cancel()') Cancel
+        button.btn.btn-primary(type='button', ng-click='save()', ng-disabled='(createFormDialog.$dirty && createFormDialog.$invalid) || createFormDialog.$pristine') Сохранить

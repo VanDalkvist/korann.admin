@@ -1,83 +1,68 @@
 (function (app) {
     'use strict';
 
-    // 
-    app.classy.controller({
-        name: 'ProductsController',
-        inject: [ '$scope', 'Product', '$modal' ],
+    // todo: add module
+    app.controller('ProductsController', [
+        '$scope', 'Product', '$modal',
+        function ($scope, Product, $modal) {
+            // #region initialization
 
-        // #region model
-
-        model: {
-            products: []
-        },
-
-        // #region initialization
-
-        init: function () {
-            this.$.model = {
-                products: this.Product.query()
+            $scope.model = {
+                products: Product.query()
             };
-        },
 
-        // #region public functions
+            // #region public functions
 
-        refresh: function () {
-            this.$.model.products = this.Product.query();
-        },
-        save: function (product) {
-            product.$update();
-        },
-        edit: function (product) {
-            this.$modal.open({
-                templateUrl: '/views/widgets/product-edit.html',
-                controller: 'ModalInstanceCtrl',
-                resolve: {
-                    data: function () {
-                        return ng.copy(product);
+            $scope.refresh = function refresh() {
+                $scope.model.products = Product.query();
+            };
+            $scope.save = function save(product) {
+                product.$update();
+            };
+            $scope.edit = function edit(product) {
+                $modal.open({
+                    templateUrl: '/views/widgets/product-edit.html',
+                    controller: 'ProductCreateController',
+                    resolve: {
+                        data: function () {
+                            return ng.copy(product);
+                        },
+                        mode: function () {
+                            return 'edit';
+                        }
                     }
-                }
-            });
-        },
-        remove: function (product) {
-            product.$remove();
-        },
-        new: function () {
-            var model = this.$.createModel = new this.Product();
-            var modalInstance = this.$modal.open({
-                templateUrl: '/views/widgets/product-edit.html',
-                controller: 'ModalInstanceCtrl',
-                resolve: {
-                    data: function () {
-                        return model;
+                });
+            };
+            $scope.remove = function remove(product) {
+                product.$remove();
+            };
+            $scope.newProduct = function newProduct() {
+                $scope.createModel = new Product();
+                var modalInstance = $modal.open({
+                    templateUrl: '/views/widgets/product-edit.html',
+                    controller: 'ProductCreateController',
+                    resolve: {
+                        data: function () {
+                            return $scope.createModel;
+                        },
+                        mode: function () {
+                            return 'create';
+                        }
                     }
-                }
-            });
+                });
 
-            modalInstance.result.then(function (selectedItem) {
-//                $scope.selected = selectedItem;
-            }, function () {
-//                $log.info('Modal dismissed at: ' + new Date());
-            });
-        },
-        create: function () {
-            this.$.createModel.$save();
+                modalInstance.result.then(function (selectedItem) {
+                    //                $scope.selected = selectedItem;
+                }, function () {
+                    //                $log.info('Modal dismissed at: ' + new Date());
+                });
+            };
+
+            $scope.create = function create() {
+                $scope.createModel.$save();
+            };
+
+            // #region private functions (_ prefixed)
         }
-
-        // #region private functions (_ prefixed)
-
-    });
+    ]);
 })(app);
-
-var ModalInstanceCtrl = function ($scope, $modalInstance, data) {
-
-    $scope.model = data;
-
-    $scope.ok = function () {
-        $modalInstance.close();
-    };
-
-    $scope.cancel = function () {
-        $modalInstance.dismiss('cancel');
-    };
-};

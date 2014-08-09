@@ -6,8 +6,17 @@
         .service('Product', [
             '$resource',
             function ($resource) {
-                // todo: create PUT method support
                 return $resource('/api/product/:id', {
+                    id: '@id'
+                }, {
+                    update: { method: 'PUT' }
+                });
+            }
+        ])
+        .service('Category', [
+            '$resource',
+            function ($resource) {
+                return $resource('/api/category/:id', {
                     id: '@id'
                 }, {
                     update: { method: 'PUT' }

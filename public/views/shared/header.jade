@@ -14,15 +14,15 @@
             .row
                 .col-lg-8
                     .input-group.form
-                        .action: a.btn.btn-primary.signup(ui-sref="login") Login
+                        .action: a.btn.btn-primary.signup(ui-sref="login") Вход
         .col-xs-2.col-sm-2.col-lg-2.col-md-2.pull-right(ng-if="!!user.username")
             .navbar.navbar-inverse(role='banner')
                 nav.collapse.navbar-collapse.bs-navbar-collapse.navbar-right(role='navigation')
                     ul.nav.navbar-nav
                         li.dropdown
                             a.dropdown-toggle(data-toggle='dropdown', style="cursor: pointer;")
-                                | Hello, {{user.username}}
+                                | {{user.username}}
                                 b.caret
                             ul.dropdown-menu.animated.fadeInUp(role="menu")
-                                li(style="cursor: pointer;"): a Profile
-                                li(style="cursor: pointer;"): a(ng-click="logout()") Logout
+                                li(style="cursor: pointer;"): a Профиль
+                                li(style="cursor: pointer;"): a(ng-click="logout()") Выход

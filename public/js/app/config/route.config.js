@@ -1,7 +1,7 @@
 (function () {
     'use strict';
 
-    angular.module('korann.config.route')
+    angular.module('korann.config.routes')
         .config([
             '$locationProvider', '$stateProvider', '$urlRouterProvider',
             function ($locationProvider, $stateProvider, $urlRouterProvider) {
