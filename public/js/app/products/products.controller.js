@@ -3,8 +3,8 @@
 
     // todo: add module
     app.controller('ProductsController', [
-        '$scope', 'Product', '$modal',
-        function ($scope, Product, $modal) {
+        '$scope', 'Product', '$modal', '$log',
+        function ($scope, Product, $modal, $log) {
             // #region initialization
 
             $scope.model = {
@@ -20,7 +20,7 @@
                 product.$update();
             };
             $scope.edit = function edit(product) {
-                $modal.open({
+                var modalInstance = $modal.open({
                     templateUrl: '/views/widgets/product-edit.html',
                     controller: 'ProductCreateController',
                     resolve: {
@@ -32,6 +32,12 @@
                         }
                     }
                 });
+                modalInstance.result.then(function (updated) {
+                    Product.update({ id: updated.item._id }, updated.item, function () {
+                        // todo: updated notification
+                        $log.debug("product updated");
+                    });
+                })
             };
             $scope.remove = function remove(product) {
                 product.$remove();
@@ -53,8 +59,6 @@
 
                 modalInstance.result.then(function (selectedItem) {
                     //                $scope.selected = selectedItem;
-                }, function () {
-                    //                $log.info('Modal dismissed at: ' + new Date());
                 });
             };
 

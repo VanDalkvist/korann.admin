@@ -130,8 +130,9 @@ module.exports = function init(config, log, events, scheme, errors) {
         }
     }
 
-    function _update(modelName, model, sessionId, done) {
-        sendAuthenticatedRequest('put', modelName, { data: model }, successCallback, sessionId, done); // todo: create constants file
+    function _update(modelName, id, model, sessionId, done) {
+        var options = { query: { id: id }, data: model };
+        sendAuthenticatedRequest('put', modelName, options, successCallback, sessionId, done);
 
         function successCallback(result) {
             logger.debug(modelName, "(id = ", model.id, ") was updated.");
@@ -178,7 +179,7 @@ module.exports = function init(config, log, events, scheme, errors) {
             session: credentials.sessionId
         };
 
-        options = _.extend({ headers: headers });
+        options = _.extend(options, { headers: headers });
 
         sendRequest(method, modelName, options, successCallback, done);
     }

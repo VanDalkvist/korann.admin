@@ -35,7 +35,7 @@ module.exports = function (ProxyClient, log, scheme) {
     };
 
     controller.update = function (req, res, next) {
-        Client().update(req.model, req.body, req.signedCookies.session, _getDataRequestCallback(res, next));
+        Client().update(req.model, req.params.id, req.body, req.signedCookies.session, _getDataRequestCallback(res, next));
     };
 
     controller.remove = function (req, res, next) {

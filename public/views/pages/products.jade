@@ -13,6 +13,7 @@
                         p: | {{ product._id }}
                         h3: | Наименование: {{ product.name }}
                         p: | Описание: {{ product.desc }}
+                        p: | Категория: {{ product.category }}
                         p: | Цена: {{ product.price }}
                         .btn-group.btn-group-lg
                             button.btn.btn-default(ng-click="edit(product)") Редактировать

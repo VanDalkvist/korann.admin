@@ -8,12 +8,12 @@
 
             // #region model
 
-            $scope.model = data;
+            $scope.model = ng.copy(data);
             $scope.mode = mode;
             $scope.categories = Category.query();
 
-            $scope.ok = function () {
-                $modalInstance.close();
+            $scope.save = function (item) {
+                $modalInstance.close({ item: item });
             };
 
             $scope.cancel = function () {
