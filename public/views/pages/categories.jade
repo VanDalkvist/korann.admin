@@ -1,0 +1,20 @@
+.products
+    .row.toolbar
+        .btn-group.btn-group-lg
+            button.btn.btn-default(ng-click="refresh()") Обновить
+            button.btn.btn-default(ng -click="newCategory()") Создать
+            .row
+        //.col-md-11
+        div(ng-repeat='category in model.categories')
+            .col-xs-4.col-sm-4.col-md-4.col-lg-4
+                .thumbnail
+                    img.img-responsive(src='img/thumb.jpg', alt='')
+                    .caption
+                        p: | {{ category._id }}
+                        h3: | Наименование: {{ category.name }}
+                        p: | Описание: {{ category.desc }}
+                        p: | Категория: {{ category.category }}
+                        p: | Цена: {{ category.price }}
+                        .btn-group.btn-group-lg
+                            button.btn.btn-default(ng-click="edit(category)") Редактировать
+                            button.btn.btn-default(ng-click="remove(category)") Удалить

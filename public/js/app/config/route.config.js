@@ -51,6 +51,15 @@
                                 controller: 'ProductsController'
                             }
                         }
+                    })
+                    .state('dashboard.categories', {
+                        url: '/categories',
+                        views: {
+                            'work@dashboard': {
+                                templateUrl: '/views/pages/categories.html',
+                                controller: 'CategoriesController'
+                            }
+                        }
                     });
 
                 $stateProvider
