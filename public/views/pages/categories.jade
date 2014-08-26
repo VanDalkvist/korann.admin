@@ -1,8 +1,8 @@
 .products
     .row.toolbar
         .btn-group.btn-group-lg
-            button.btn.btn-default(ng-click="refresh()") Обновить
-            button.btn.btn-default(ng -click="newCategory()") Создать
+            button.btn.btn-default(ng-click="model.refresh()") Обновить
+            button.btn.btn-default(ng -click="model.create()") Создать
             .row
         //.col-md-11
         div(ng-repeat='category in model.categories')
@@ -16,5 +16,5 @@
                         p: | Категория: {{ category.category }}
                         p: | Цена: {{ category.price }}
                         .btn-group.btn-group-lg
-                            button.btn.btn-default(ng-click="edit(category)") Редактировать
-                            button.btn.btn-default(ng-click="remove(category)") Удалить
+                            button.btn.btn-default(ng-click="model.edit(category)") Редактировать
+                            button.btn.btn-default(ng-click="model.remove(category)") Удалить

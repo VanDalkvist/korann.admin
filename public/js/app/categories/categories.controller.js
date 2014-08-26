@@ -3,70 +3,52 @@
 
     // todo: add module
     app.controller('CategoriesController', [
-        '$scope', 'Category', '$modal', '$log',
-        function ($scope, Category, $modal, $log) {
+        '$scope', '$modal', '$log', 'Dialog', 'Category',
+        function ($scope, $modal, $log, Dialog, Category) {
+
             // #region initialization
 
-            $scope.model = {
-                categories: Category.query()
-            };
+            ng.extend($scope, {
+                model: {
+                    categories: Category.query(),
+                    refresh: _refresh,
+                    remove: _remove,
+                    edit: _edit,
+                    create: _create
+                }
+            });
 
             // #region public functions
 
-            $scope.refresh = function refresh() {
+            // #region private functions
+
+            function _refresh() {
                 $scope.model.categories = Category.query();
-            };
-            $scope.save = function save(category) {
-                category.$update();
-            };
-            $scope.edit = function edit(category) {
-                var modalInstance = $modal.open({
-                    templateUrl: '/views/widgets/category-edit.html',
-                    controller: 'CategoryCreateController',
-                    resolve: {
-                        data: function () {
-                            return ng.copy(category);
-                        },
-                        mode: function () {
-                            return 'edit';
-                        }
-                    }
+            }
+
+            function _remove(category) {
+                category.$remove(function () {
+                    // todo: delete from list
+                    _refresh();
                 });
-                modalInstance.result.then(function (updated) {
+            }
+
+            function _edit(category) {
+                Dialog.open('category-edit', category).then(function (updated) {
                     Category.update({ id: updated.item._id }, updated.item, function () {
-                        // todo: updated notification
                         $log.debug("category updated");
+                        _refresh();
                     });
-                })
-            };
-            $scope.remove = function remove(category) {
-                category.$remove();
-            };
-            $scope.newCategory = function newCategory() {
-                $scope.createModel = new Category();
-                var modalInstance = $modal.open({
-                    templateUrl: '/views/widgets/category-edit.html',
-                    controller: 'CategoryCreateController',
-                    resolve: {
-                        data: function () {
-                            return $scope.createModel;
-                        },
-                        mode: function () {
-                            return 'create';
-                        }
-                    }
                 });
+            }
 
-                modalInstance.result.then(function (selectedItem) {
-                    //                $scope.selected = selectedItem;
+            function _create() {
+                Dialog.open('category-create', new Category()).then(function (updated) {
+                    Category.update({ id: updated.item._id }, updated.item, function () {
+                        _refresh();
+                    });
                 });
-            };
-
-            $scope.create = function create() {
-                $scope.createModel.$save();
-            };
-
-            // #region private functions (_ prefixed)
+            }
         }
     ]);
 })(app);

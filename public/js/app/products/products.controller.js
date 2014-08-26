@@ -3,70 +3,50 @@
 
     // todo: add module
     app.controller('ProductsController', [
-        '$scope', 'Product', '$modal', '$log',
-        function ($scope, Product, $modal, $log) {
+        '$scope', '$modal', '$log', 'Dialog', 'Product',
+        function ($scope, $modal, $log, Dialog, Product) {
             // #region initialization
 
-            $scope.model = {
-                products: Product.query()
-            };
+            ng.extend($scope, {
+                model: {
+                    products: Product.query(),
+                    refresh: _refresh,
+                    remove: _remove,
+                    edit: _edit,
+                    create: _create
+                }
+            });
 
             // #region public functions
 
-            $scope.refresh = function refresh() {
+            // #region private functions
+
+            function _refresh() {
                 $scope.model.products = Product.query();
-            };
-            $scope.save = function save(product) {
-                product.$update();
-            };
-            $scope.edit = function edit(product) {
-                var modalInstance = $modal.open({
-                    templateUrl: '/views/widgets/product-edit.html',
-                    controller: 'ProductCreateController',
-                    resolve: {
-                        data: function () {
-                            return ng.copy(product);
-                        },
-                        mode: function () {
-                            return 'edit';
-                        }
-                    }
+            }
+
+            function _remove(product) {
+                product.$remove(function () {
+                    // todo: delete from list
+                    _refresh();
                 });
-                modalInstance.result.then(function (updated) {
+            }
+
+            function _create() {
+                Dialog.open('product-create', new Product()).then(function (created) {
+                    created.$save();
+                });
+            }
+
+            function _edit(product) {
+                Dialog.open('product-edit', product).then(function (updated) {
                     Product.update({ id: updated.item._id }, updated.item, function () {
                         // todo: updated notification
                         $log.debug("product updated");
+                        _refresh();
                     });
-                })
-            };
-            $scope.remove = function remove(product) {
-                product.$remove();
-            };
-            $scope.newProduct = function newProduct() {
-                $scope.createModel = new Product();
-                var modalInstance = $modal.open({
-                    templateUrl: '/views/widgets/product-edit.html',
-                    controller: 'ProductCreateController',
-                    resolve: {
-                        data: function () {
-                            return $scope.createModel;
-                        },
-                        mode: function () {
-                            return 'create';
-                        }
-                    }
                 });
-
-                modalInstance.result.then(function (selectedItem) {
-                    //                $scope.selected = selectedItem;
-                });
-            };
-
-            $scope.create = function create() {
-                $scope.createModel.$save();
-            };
-
-            // #region private functions (_ prefixed)
+            }
         }
     ]);
 })(app);
