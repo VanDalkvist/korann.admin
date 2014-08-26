@@ -2,7 +2,7 @@
     'use strict';
 
     // products Module
-    ng.module('korann.products', [])
+    ng.module('korann.products', ['korann.categories'])
         .service('Product', [
             '$resource',
             function ($resource) {

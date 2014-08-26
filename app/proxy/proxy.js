@@ -47,9 +47,9 @@ module.exports = function init(config, log, events, scheme, errors) {
 
     function _authorizeApp(done) {
         var appAuthInfo = { appId: this.defaults.appId, appSecret: this.defaults.appSecret };
-        var options = { data: appAuthInfo };
+        var context = { data: appAuthInfo };
 
-        sendRequest('post', 'AppAuth', options, successCallback, done);
+        sendRequest('post', 'AppAuth', context, successCallback, done);
 
         function successCallback(data) {
             var storage = instance.defaults.storage;
@@ -66,7 +66,7 @@ module.exports = function init(config, log, events, scheme, errors) {
     }
 
     function _userLogin(username, password, done) {
-        var options = {
+        var context = {
             data: {
                 cred: { username: username, password: password }
             },
@@ -76,7 +76,7 @@ module.exports = function init(config, log, events, scheme, errors) {
             }
         };
 
-        sendRequest('post', 'UserLogin', options, successCallback, done);
+        sendRequest('post', 'UserLogin', context, successCallback, done);
 
         function successCallback(result) {
             instance.defaults.storage.addSession(result.sessionId, result);
@@ -88,7 +88,7 @@ module.exports = function init(config, log, events, scheme, errors) {
     }
 
     function _userLogout(session, done) {
-        var options = {
+        var context = {
             data: {
                 cred: instance.defaults.storage.getSessionSync(session)
             },
@@ -98,7 +98,7 @@ module.exports = function init(config, log, events, scheme, errors) {
             }
         };
 
-        sendRequest('post', 'UserLogout', options, successCallback, done);
+        sendRequest('post', 'UserLogout', context, successCallback, done);
 
         function successCallback(result) {
             instance.defaults.storage.removeSession(result.sessionId);
@@ -131,11 +131,11 @@ module.exports = function init(config, log, events, scheme, errors) {
     }
 
     function _update(modelName, id, model, sessionId, done) {
-        var options = { query: { id: id }, data: model };
-        sendAuthenticatedRequest('put', modelName, options, successCallback, sessionId, done, id);
+        var context = { data: model };
+        sendAuthenticatedRequest('put', modelName, context, successCallback, sessionId, done, id);
 
         function successCallback(result) {
-            logger.debug(modelName, "(id = ", model.id, ") was updated.");
+            logger.debug(modelName, "(id = ", id, ") was updated.");
 
             if (done) done(null, result);
         }
@@ -171,7 +171,7 @@ module.exports = function init(config, log, events, scheme, errors) {
         }
     }
 
-    function sendAuthenticatedRequest(method, modelName, options, successCallback, sessionId, done, urlPart) {
+    function sendAuthenticatedRequest(method, modelName, context, successCallback, sessionId, done, urlPart) {
         var credentials = instance.defaults.storage.getSessionSync(sessionId);
         var headers = {
             appId: instance.defaults.appId,
@@ -179,15 +179,15 @@ module.exports = function init(config, log, events, scheme, errors) {
             session: credentials.sessionId
         };
 
-        options = _.extend(options, { headers: headers });
+        context = _.extend(context, { headers: headers });
 
-        sendRequest(method, modelName, options, successCallback, done, urlPart);
+        sendRequest(method, modelName, context, successCallback, done, urlPart);
     }
 
-    function sendRequest(method, modelName, options, successCallback, done, urlPart) {
+    function sendRequest(method, modelName, context, successCallback, done, urlPart) {
         var eventCallbacks = _getDefaultEventCallbacks(successCallback, done);
 
-        return _sendRequestWithCallbacks(method, modelName, options, eventCallbacks, urlPart);
+        return _sendRequestWithCallbacks(method, modelName, context, eventCallbacks, urlPart);
     }
 
     function _getDefaultEventCallbacks(successCallback, done) {
@@ -200,10 +200,10 @@ module.exports = function init(config, log, events, scheme, errors) {
         return eventCallbacks;
     }
 
-    function _sendRequestWithCallbacks(method, modelName, options, eventCallbacks, urlPart) {
+    function _sendRequestWithCallbacks(method, modelName, context, eventCallbacks, urlPart) {
         var urlPath = scheme[modelName];
 
-        var request = instance[method](urlPath + '/' + (urlPart || ''), options);
+        var request = instance[method](urlPath + '/' + (urlPart || ''), context);
 
         _setCallbacksForRequest(request, eventCallbacks);
 

@@ -1,11 +1,30 @@
-(function () {
+(function (module) {
     'use strict';
 
-    /**
-     * korann.modal Module
-     */
-    ng.module('korann.modal')
-        .constant("modalMap", (function () {
+    module.service("Dialog", ['$rootScope', '$modal', 'dialogMap',
+        function ($rootScope, $modal, dialogMap) {
+            return {
+                open: function (id, data) {
+                    var dialogContext = dialogMap[id];
+
+                    var scope = ng.extend($rootScope.$new(), { title: dialogContext.title });
+                    return $modal.open({
+                        templateUrl: dialogContext.templateUrl,
+                        controller: dialogContext.controller,
+                        scope: scope,
+                        resolve: {
+                            data: function () {
+                                return ng.copy(data);
+                            }
+                        }
+                    }).result;
+                }
+            };
+        }
+    ]);
+
+    module.constant("dialogMap",
+        (function () {
             return {
                 'product-create': {
                     controller: 'ProductCreateController',
@@ -30,4 +49,4 @@
             };
         })()
     );
-})();
+})(ng.module('korann.modal', []));

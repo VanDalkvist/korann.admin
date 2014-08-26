@@ -1,8 +1,6 @@
 .modal-header
-    h4.modal-title(ng-if) Создание товара
-    h4.modal-title Создание товара
+    h4.modal-title {{ title }}
         //span.glyphicon.glyphicon-star
-        //| Product
     .modal-body
         ng-form(name='createFormDialog', role='form', novalidate)
             .form-group.input-group-lg(ng-class='{"has-error": createFormDialog.username.$dirty && createFormDialog.username.$invalid}')
@@ -15,5 +13,5 @@
                 label.control-label(for='category') Категория:
                 select#category.form-control(ng-model="model.category", type='number', name='category', ng-options='category._id as category.name for category in categories', required)
     .modal-footer
-        button.btn.btn-default(type='button', ng-click='cancel()') Cancel
+        button.btn.btn-default(type='button', ng-click='cancel()') Отмена
         button.btn.btn-primary(type='button', ng-click='save(model)', ng-disabled='(createFormDialog.$dirty && createFormDialog.$invalid) || createFormDialog.$pristine') Сохранить

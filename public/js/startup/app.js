@@ -3,7 +3,7 @@
 
     var app = angular.module('korann.admin', [
         'ngResource', 'ngCookies', 'classy', 'ui.router',
-        'korann.user', 'korann.config', 'korann.products', 'korann.modal',
+        'korann.user', 'korann.config', 'korann.products', 'korann.categories', 'korann.modal',
         'ui.bootstrap', "ui.bootstrap.tpls"
     ]);
 
