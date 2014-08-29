@@ -2,7 +2,7 @@
     'use strict';
 
     // todo: add module
-    app.controller('ProductsController', [
+    app.controller('ProductListController', [
         '$scope', '$modal', '$log', 'Dialog', 'Product',
         function ($scope, $modal, $log, Dialog, Product) {
             // #region initialization
@@ -26,22 +26,20 @@
             }
 
             function _remove(product) {
-                product.$remove(function () {
-                    // todo: delete from list
+                Product.remove({ id: product._id }, function () {
                     _refresh();
                 });
             }
 
             function _create() {
-                Dialog.open('product-create', new Product()).then(function (created) {
-                    created.$save();
+                Dialog.open('product-details', new Product(), { title: 'Создание продукта' }).then(function (result) {
+                    result.item.$save();
                 });
             }
 
             function _edit(product) {
-                Dialog.open('product-edit', product).then(function (updated) {
+                Dialog.open('product-details', product, { title: 'Редактирование продукта' }).then(function (updated) {
                     Product.update({ id: updated.item._id }, updated.item, function () {
-                        // todo: updated notification
                         $log.debug("product updated");
                         _refresh();
                     });

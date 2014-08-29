@@ -1,17 +1,15 @@
 .modal-header
-    h4.modal-title {{ title }}
+    h4.modal-title {{ options.title }}
         //span.glyphicon.glyphicon-star
     .modal-body
         ng-form(name='createFormDialog', role='form', novalidate)
             .form-group.input-group-lg(ng-class='{"has-error": createFormDialog.username.$dirty && createFormDialog.username.$invalid}')
                 label.control-label(for='name') Наименование:
                 input#name.form-control(type='text', name='name', ng-model='model.name', required)
+                label.control-label(for='name') Бренд:
+                input#name.form-control(type='text', name='name', ng-model='model.brand', required)
                 label.control-label(for='desc') Описание:
-                input#desc.form-control(type='text', name='desc', ng-model='model.desc', required)
-                label.control-label(for='price') Цена:
-                input#price.form-control(type='number', name='price', ng-model='model.price', required, min='0', max='10000')
-                label.control-label(for='category') Категория:
-                select#category.form-control(ng-model="model.category", type='number', name='category', ng-options='category._id as category.name for category in categories', required)
+                input#desc.form-control(type='text', name='desc', ng-model='model.description', required)
     .modal-footer
         button.btn.btn-default(type='button', ng-click='cancel()') Отмена
         button.btn.btn-primary(type='button', ng-click='save(model)', ng-disabled='(createFormDialog.$dirty && createFormDialog.$invalid) || createFormDialog.$pristine') Сохранить

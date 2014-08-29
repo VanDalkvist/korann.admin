@@ -10,11 +10,12 @@
                 .thumbnail
                     img.img-responsive(src='img/thumb.jpg', alt='')
                     .caption
-                        p: | id - {{ product._id }}
-                        h3: | Наименование: {{ product.name }}
+                        h3: | {{ product.name }}
                         p: | Описание: {{ product.desc }}
                         p: | Категория: {{ product.category }}
                         p: | Цена: {{ product.price }}
+                        p: | Объём: {{ product.volume }}
+                        p: | id - {{ product._id }}
                         .btn-group.btn-group-lg
                             button.btn.btn-default(ng-click="model.edit(product)") Редактировать
                             button.btn.btn-default(ng-click="model.remove(product)") Удалить

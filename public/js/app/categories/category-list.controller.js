@@ -2,7 +2,7 @@
     'use strict';
 
     // todo: add module
-    app.controller('CategoriesController', [
+    app.controller('CategoryListController', [
         '$scope', '$modal', '$log', 'Dialog', 'Category',
         function ($scope, $modal, $log, Dialog, Category) {
 
@@ -27,14 +27,13 @@
             }
 
             function _remove(category) {
-                category.$remove(function () {
-                    // todo: delete from list
+                Category.remove({ id: category._id }, function () {
                     _refresh();
                 });
             }
 
             function _edit(category) {
-                Dialog.open('category-edit', category).then(function (updated) {
+                Dialog.open('category-details', category, { title: 'Редактирование категории' }).then(function (updated) {
                     Category.update({ id: updated.item._id }, updated.item, function () {
                         $log.debug("category updated");
                         _refresh();
@@ -43,9 +42,9 @@
             }
 
             function _create() {
-                Dialog.open('category-create', new Category()).then(function (updated) {
-                    Category.update({ id: updated.item._id }, updated.item, function () {
-                        _refresh();
+                Dialog.open('category-details', new Category(), { title: 'Создание категории' }).then(function (result) {
+                    result.item.$save(function (created) {
+                        $scope.model.categories.push(created);
                     });
                 });
             }

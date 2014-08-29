@@ -2,7 +2,7 @@
     'use strict';
 
     // represents controller for creating and editing product
-    app.controller("ProductCreateController", [
+    app.controller("ProductDetailsController", [
         '$scope', '$modalInstance', 'data', 'Category',
         function ($scope, $modalInstance, data, Category) {
 

@@ -1,7 +1,7 @@
-(function () {
+(function (module) {
     'use strict';
 
-    ng.module('korann.cache', [])
+    module
         .provider('cache', function () {
 
             // #region initialization
@@ -41,4 +41,4 @@
                 storage.removeItem(key);
             }
         });
-})();
+})(ng.module('korann.cache', []));

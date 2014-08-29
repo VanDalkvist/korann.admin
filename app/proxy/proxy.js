@@ -141,8 +141,8 @@ module.exports = function init(config, log, events, scheme, errors) {
         }
     }
 
-    function _remove(modelName, query, sessionId, done) {
-        sendAuthenticatedRequest('del', modelName, { query: query }, successCallback, sessionId, done);
+    function _remove(modelName, id, sessionId, done) {
+        sendAuthenticatedRequest('del', modelName, { }, successCallback, sessionId, done, id);
 
         function successCallback(result) {
             logger.debug(modelName, "was deleted.");
@@ -155,7 +155,7 @@ module.exports = function init(config, log, events, scheme, errors) {
         sendAuthenticatedRequest('get', modelName, { query: query }, successCallback, sessionId, done, query.id);
 
         function successCallback(result) {
-            logger.debug("Response received successfully. \n");
+            logger.debug("Response received successfully. \n", result);
 
             if (done) done(null, result);
         }
@@ -165,7 +165,7 @@ module.exports = function init(config, log, events, scheme, errors) {
         sendAuthenticatedRequest('get', modelName, query, successCallback, sessionId, done);
 
         function successCallback(result) {
-            logger.debug("Response received successfully. \n");
+            logger.debug("Response received successfully. \n", result);
 
             if (done) done(null, result);
         }

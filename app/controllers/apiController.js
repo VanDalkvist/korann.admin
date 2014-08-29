@@ -39,7 +39,7 @@ module.exports = function (ProxyClient, log, scheme) {
     };
 
     controller.remove = function (req, res, next) {
-        Client().remove(req.model, req.query, req.signedCookies.session, _getDataRequestCallback(res, next));
+        Client().remove(req.model, req.params.id, req.signedCookies.session, _getDataRequestCallback(res, next));
     };
 
     // #region private functions

@@ -4,10 +4,10 @@
     module.service("Dialog", ['$rootScope', '$modal', 'dialogMap',
         function ($rootScope, $modal, dialogMap) {
             return {
-                open: function (id, data) {
+                open: function (id, data, options) {
                     var dialogContext = dialogMap[id];
 
-                    var scope = ng.extend($rootScope.$new(), { title: dialogContext.title });
+                    var scope = ng.extend($rootScope.$new(), { options: options });
                     return $modal.open({
                         templateUrl: dialogContext.templateUrl,
                         controller: dialogContext.controller,
@@ -26,25 +26,13 @@
     module.constant("dialogMap",
         (function () {
             return {
-                'product-create': {
-                    controller: 'ProductCreateController',
-                    templateUrl: '/views/widgets/product-edit.html',
-                    title: 'Создание продукта'
+                'product-details': {
+                    controller: 'ProductDetailsController',
+                    templateUrl: '/views/widgets/product-details.html'
                 },
-                'product-edit': {
-                    controller: 'ProductCreateController',
-                    templateUrl: '/views/widgets/product-edit.html',
-                    title: 'Редактирование продукта'
-                },
-                'category-create': {
-                    controller: 'CategoryCreateController',
-                    templateUrl: '/views/widgets/category-edit.html',
-                    title: 'Создание категории'
-                },
-                'category-edit': {
-                    controller: 'CategoryCreateController',
-                    templateUrl: '/views/widgets/category-edit.html',
-                    title: 'Редактирование категории'
+                'category-details': {
+                    controller: 'CategoryDetailsController',
+                    templateUrl: '/views/widgets/category-details.html'
                 }
             };
         })()

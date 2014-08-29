@@ -47,8 +47,8 @@
                         url: '/products',
                         views: {
                             'work@dashboard': {
-                                templateUrl: '/views/pages/products.html',
-                                controller: 'ProductsController'
+                                templateUrl: '/views/pages/product-list.html',
+                                controller: 'ProductListController'
                             }
                         }
                     })
@@ -56,10 +56,24 @@
                         url: '/categories',
                         views: {
                             'work@dashboard': {
-                                templateUrl: '/views/pages/categories.html',
-                                controller: 'CategoriesController'
+                                templateUrl: '/views/pages/category-list.html',
+                                controller: 'CategoryListController'
                             }
-                        }
+                        },
+//                        resolve: {
+//                            categories: ['Category', function (Category) {
+//
+//                                function refresh() {
+//                                    return Category.query().$promise.then(function (result) {
+//                                        var hash = _.indexBy(result, '_id');
+//                                        hash.__proto__.refresh = refresh;
+//                                        return hash;
+//                                    });
+//                                }
+//
+//                                return refresh();
+//                            }]
+//                        }
                     });
 
                 $stateProvider
