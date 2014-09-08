@@ -12,6 +12,7 @@
             $scope.categories = Category.query();
 
             $scope.save = function (item) {
+                item.category = { name: item.category.name, id: item.category._id };
                 $modalInstance.close({ item: item });
             };
 

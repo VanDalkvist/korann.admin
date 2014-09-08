@@ -15,7 +15,7 @@
                 label.control-label(for='brand') Бренд:
                 input#brand.form-control(type='number', name='brand', ng-model='model.brand', required, min='0', max='10000')
                 label.control-label(for='category') Категория:
-                select#category.form-control(ng-model="model.category", type='number', name='category', ng-options='category._id as category.name for category in categories', required)
+                select#category.form-control(ng-model="model.category", name='category', ng-options='category as category.name for category in categories track by category.id', required)
     .modal-footer
         button.btn.btn-default(type='button', ng-click='cancel()') Отмена
         button.btn.btn-primary(type='button', ng-click='save(model)', ng-disabled='(createFormDialog.$dirty && createFormDialog.$invalid) || createFormDialog.$pristine') Сохранить

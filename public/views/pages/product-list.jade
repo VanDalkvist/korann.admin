@@ -12,10 +12,10 @@
                     .caption
                         h3: | {{ product.name }}
                         p: | Описание: {{ product.desc }}
-                        p: | Категория: {{ product.category }}
+                        p: | Категория: {{ product.category.name }}
                         p: | Цена: {{ product.price }}
                         p: | Объём: {{ product.volume }}
-                        p: | id - {{ product._id }}
+                        p.id: | id - {{ product._id }}
                         .btn-group.btn-group-lg
                             button.btn.btn-default(ng-click="model.edit(product)") Редактировать
                             button.btn.btn-default(ng-click="model.remove(product)") Удалить
