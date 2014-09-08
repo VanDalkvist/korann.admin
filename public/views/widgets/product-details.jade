@@ -13,7 +13,9 @@
                 label.control-label(for='volume') Объём:
                 input#volume.form-control(type='number', name='volume', ng-model='model.volume', required, min='0', max='10000')
                 label.control-label(for='brand') Бренд:
-                input#brand.form-control(type='number', name='brand', ng-model='model.brand', required, min='0', max='10000')
+                select#brand.form-control(name='brand', ng-model='model.brand', required)
+                    option Кора
+                    option Сантэ
                 label.control-label(for='category') Категория:
                 select#category.form-control(ng-model="model.category", name='category', ng-options='category as category.name for category in categories track by category.id', required)
     .modal-footer

@@ -9,10 +9,15 @@
             // #region model
 
             $scope.model = ng.copy(data);
-            $scope.categories = Category.query();
+            Category.query(function (categories) {
+                $scope.categories = _.map(categories, function (category) {
+                    category.id = category._id;
+                    return category;
+                });
+            });
 
             $scope.save = function (item) {
-                item.category = { name: item.category.name, id: item.category._id };
+                item.category = { name: item.category.name, id: item.category.id };
                 $modalInstance.close({ item: item });
             };
 
