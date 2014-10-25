@@ -1,3 +1,5 @@
+var path = require('path');
+
 function init() {
     return {
         "task": "grunt-injector",
@@ -5,10 +7,23 @@ function init() {
         "config": {
             "options": {
                 template: 'public/views/shared/layout.jade',
-                "starttag": "// injector:{{ext}}",
-                "endtag": "// endinjector",
+                starttag: "// injector:{{ext}}",
+                endtag: "// endinjector",
+                ignorePath: 'public',
                 transform: function (filename) {
-                    return 'script(src="' + filename + '")';
+                    var ext = function (file) {
+                        return path.extname(file).slice(1);
+                    };
+                    var e = ext(filename);
+                    var fileTag = '';
+                    if (e === 'css') {
+                        fileTag = 'link(rel="stylesheet",href="';
+                    } else if (e === 'js') {
+                        fileTag = 'script(src="';
+                    } else if (e === 'html') {
+                        fileTag = 'link(rel="import", href="';
+                    }
+                    return fileTag + filename + '")';
                 }
             },
             "local": {
