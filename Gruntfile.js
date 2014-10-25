@@ -3,7 +3,7 @@ module.exports = function (grunt) {
 
     grunt.initConfig(config.get(grunt));
 
-    grunt.registerTask('build', ['tags']);
+    grunt.registerTask('build', ['injector']);
     grunt.registerTask('spy', ['build', 'watch:content']);
     grunt.registerTask('dev', ['build', 'nodemon']);
     grunt.registerTask('restart', ['nodemon']);

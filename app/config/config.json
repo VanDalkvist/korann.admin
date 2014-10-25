@@ -9,8 +9,8 @@
         "port": 3001
     },
     "auth": {
-        "appId": "b1bc1a90-bdb2-11e3-9b07-dbea819fe8f0",
-        "appSecret": "mR/+jsximqNBRXxj7mY20cEILYRsfa2my8K4XCyTTgTiN2WoL4Y8ZcAx+aBYgxcTWfY5NoeTvhtfdIpHjqiQMg=="
+        "appId": "34320440-5c36-11e4-9fb1-2d99c29d2441",
+        "appSecret": "Xa6pzmBiNzpDI7JXXOod/5+mun8F26mE2o09tXD/DoFp/EiI9XWfudLdYB5ihAyew2mELx5IZDMEPb1yWKL3AQ=="
     },
     "seance": {
         "cookieSecret": "mR/+jsximqNBRXxj7mY20cEILYRsfa2my8K4XCyTTgTiN2WoL4Y8ZcAx+aBYgxcTWfY5NoeTvhtfdIpHjqiQMg=="
