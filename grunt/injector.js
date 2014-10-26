@@ -6,7 +6,6 @@ function init() {
         "name": "injector",
         "config": {
             "options": {
-                template: 'public/views/shared/layout.jade',
                 starttag: "// injector:{{ext}}",
                 endtag: "// endinjector",
                 ignorePath: 'public',
