@@ -15,7 +15,7 @@ module.exports = function (ProxyClient, log, errors, config) {
 
                 logger.debug("User '" + loginInfo.login + "' successfully log in.");
                 _setCookie(res, result);
-                res.send(200, { username: result.name });
+                res.status(200).send({ username: result.name });
             });
         },
         logout: function (req, res, next) {
@@ -25,7 +25,7 @@ module.exports = function (ProxyClient, log, errors, config) {
 
                 logger.log("Session '" + session + "' successfully destroyed.");
                 res.clearCookie(cookieName);
-                res.send(200);
+                res.status(200).end();
             });
         },
         isAuthenticated: function (req, res, next) {
@@ -38,10 +38,10 @@ module.exports = function (ProxyClient, log, errors, config) {
         getCurrentUser: function (req, res, next) {
             var session = req.signedCookies.session;
             if (!session)
-                return res.send(401);
+                return res.status(401).end();
 
             _setSession(Client, session, res, function (err, result) {
-                if (err) return res.send(500);
+                if (err) return res.status(500).end();
 
                 res.send({ username: result.name });
             });

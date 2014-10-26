@@ -1,25 +1,22 @@
 (function (app) {
     'use strict';
 
-    // 
-    app.classy.controller({
-        name: 'SidebarController',
-        inject: [ '$scope', '$state' ],
+    SidebarController.$inject = ['$scope', '$state'];
+    app.controller('SidebarController', SidebarController);
 
+    function SidebarController($scope, $state) {
         // #region model
 
-        model: {
-        },
+        $scope.model = {};
 
         // #region initialization
 
-        init: function () {
-            this.$.state = this.$state.current.name;
-        }
+        $scope.init = function () {
+            $scope.state = $state.current.name;
+        };
 
         // #region public functions
 
-        // #region private functions (_ prefixed)
-
-    });
+        // #region private functions
+    }
 })(app);

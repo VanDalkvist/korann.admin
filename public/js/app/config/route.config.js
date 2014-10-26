@@ -59,7 +59,7 @@
                                 templateUrl: '/views/pages/category-list.html',
                                 controller: 'CategoryListController'
                             }
-                        },
+                        }
 //                        resolve: {
 //                            categories: ['Category', function (Category) {
 //

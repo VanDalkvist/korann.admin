@@ -1,11 +1,19 @@
 (function () {
     'use strict';
 
-    var app = angular.module('korann.admin', [
-        'ngResource', 'ngCookies', 'classy', 'ui.router',
-        'korann.user', 'korann.config', 'korann.products', 'korann.categories', 'korann.modal',
-        'ui.bootstrap', "ui.bootstrap.tpls"
-    ]);
+    var required = [
+        'ngResource',
+        'ngCookies',
+        'ui.router',
+        'korann.user',
+        'korann.config',
+        'korann.products',
+        'korann.categories',
+        'korann.modal',
+        'ui.bootstrap',
+        'ui.bootstrap.tpls'
+    ];
+    var app = angular.module('korann.admin', required);
 
     window.app = app;
     window.ng = angular;
@@ -17,9 +25,7 @@
             userService.current().then(function (result) {
                 if (!result) return;
 
-                $rootScope.user = {
-                    username: result.username
-                };
+                $rootScope.user = { username: result.username };
             });
         }
     ]);

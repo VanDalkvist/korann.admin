@@ -1,38 +1,40 @@
 (function (app) {
     'use strict';
 
-    //
-    app.classy.controller({
-        name: 'LoginController',
-        inject: [ '$rootScope', '$scope', 'userService', '$log', '$state', 'settings' ],
+    // #region controller initialization
 
+    LoginController.$inject = ['$rootScope', '$scope', '$log', '$state', 'userService', 'settings'];
+    app.controller('LoginController', LoginController);
+
+    function LoginController($rootScope, $scope, $log, $state, userService, settings) {
         // #region model
 
-        model: { login: "", password: "", error: "" },
+        $scope.model = {login: "", password: "", error: ""};
 
         // #region initialization
 
-        init: function () {
-        },
+        $scope.init = function () {
+        };
 
         // #region public functions
 
-        login: function () {
-            this.userService
-                .login(this.$.model.login, this.$.model.password)
-                .then(this._loginSuccess, this._loginFailure);
-        },
+        $scope.login = function () {
+            userService
+                .login($scope.model.login, $scope.model.password)
+                .then(_loginSuccess, _loginFailure);
+        };
 
         // #region private functions
 
-        _loginSuccess: function (result) {
-            this.$log.debug("Login successful!");
-            this.$rootScope.user = angular.extend({}, result);
-            this.$state.go(this.settings.mainState);
-        },
-        _loginFailure: function (error) {
-            this.$log.debug("Login failed! Error is ", error);
-            this.$.model.error = error.message;
+        function _loginSuccess(result) {
+            $log.debug("Login successful!");
+            $rootScope.user = angular.extend({}, result);
+            $state.go(settings.mainState);
         }
-    });
+
+        function _loginFailure(error) {
+            $log.debug("Login failed! Error is ", error);
+            $scope.model.error = error.message;
+        }
+    }
 })(app);
