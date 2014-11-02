@@ -6,10 +6,6 @@
             .form-group.input-group-lg(ng-class='{"has-error": createFormDialog.username.$dirty && createFormDialog.username.$invalid}')
                 label.control-label(for='name') Наименование:
                 input#name.form-control(type='text', name='name', ng-model='model.name', required)
-                label.control-label(for='brand') Бренд:
-                select#brand.form-control(name='brand', ng-model='model.brand', required)
-                    option Кора
-                    option Сантэ
                 label.control-label(for='desc') Описание:
                 input#desc.form-control(type='text', name='desc', ng-model='model.description', required)
     .modal-footer

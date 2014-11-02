@@ -4,28 +4,30 @@
     /**
      * represents controller for creating and editing category
      */
-    app.controller("CategoryDetailsController", [
-        '$scope', '$modalInstance', 'data', 'Category',
-        function ($scope, $modalInstance, data, Category) {
 
-            // #region model
+    app.controller("CategoryDetailsController", CategoryDetailsController);
 
-            $scope.model = ng.copy(data);
-            $scope.categories = Category.query();
+    CategoryDetailsController.$inject = ['$scope', '$modalInstance', 'data', 'Category'];
 
-            $scope.save = function (item) {
-                $modalInstance.close({ item: item });
-            };
+    function CategoryDetailsController($scope, $modalInstance, data, Category) {
 
-            $scope.cancel = function () {
-                $modalInstance.dismiss('cancel');
-            };
+        // #region model
 
-            // #region initialization
+        $scope.model = ng.copy(data);
+        $scope.categories = Category.query();
 
-            // #region public functions
+        $scope.save = function (item) {
+            $modalInstance.close({item: item});
+        };
 
-            // #region private functions
-        }
-    ]);
+        $scope.cancel = function () {
+            $modalInstance.dismiss('cancel');
+        };
+
+        // #region initialization
+
+        // #region public functions
+
+        // #region private functions
+    }
 })(app);

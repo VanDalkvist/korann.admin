@@ -12,7 +12,6 @@
                         p: | id - {{ category._id }}
                         h3: | {{ category.name }}
                         p: | Описание: {{ category.description }}
-                        p: | Бренд: {{ category.brand }}
                         .btn-group.btn-group-lg
                             button.btn.btn-default(ng-click="model.edit(category)") Редактировать
                             button.btn.btn-default(ng-click="model.remove(category)") Удалить

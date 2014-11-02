@@ -1,19 +1,20 @@
 (function (app) {
     'use strict';
 
-    app.controller('DashboardController', [
-        '$scope',
-        function ($scope) {
+    DashboardController.$inject = ['$scope'];
+    app.controller('DashboardController', DashboardController);
 
-            // #region model
-            $scope.model = { };
+    function DashboardController($scope) {
 
-            // #region initialization
+        // #region model
 
-            // #region public functions
+        $scope.model = {};
 
-            // #region private functions (_ prefixed)
+        // #region initialization
 
-        }
-    ]);
+        // #region public functions
+
+        // #region private functions
+
+    }
 })(app);
