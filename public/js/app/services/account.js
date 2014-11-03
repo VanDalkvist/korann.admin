@@ -1,9 +1,7 @@
-(function () {
+(function (module) {
     'use strict';
 
-    angular
-        .module('korann.user', ['korann.cache'])
-        .service('userService', userService);
+    module.service('userService', userService);
 
     userService.$inject = ['$http', '$location', 'cache', '$state'];
 
@@ -49,4 +47,4 @@
             });
         }
     }
-})();
+})(app);

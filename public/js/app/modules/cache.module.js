@@ -1,8 +1,7 @@
 (function (module) {
     'use strict';
 
-    module
-        .provider('cache', cacheProvider);
+    module.provider('cache', cacheProvider);
 
     function cacheProvider() {
 

@@ -1,8 +1,7 @@
-(function () {
+(function (module) {
     'use strict';
 
-    ng.module('korann.products', ['korann.categories'])
-        .service('Product', productsResource);
+    module.service('Product', productsResource);
 
     productsResource.$inject = ['$resource'];
 
@@ -13,4 +12,4 @@
             update: {method: 'PUT'}
         });
     }
-})();
+})(app);
