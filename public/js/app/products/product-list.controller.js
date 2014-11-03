@@ -1,11 +1,11 @@
 (function (app) {
     'use strict';
 
-    // todo: add module
-    ProductListController.$inject = ['$scope', '$modal', '$log', 'Dialog', 'Product'];
     app.controller('ProductListController', ProductListController);
 
-    function ProductListController($scope, $modal, $log, Dialog, Product) {
+    ProductListController.$inject = ['$scope', '$log', 'Dialog', 'Product'];
+
+    function ProductListController($scope, $log, Dialog, Product) {
 
         // #region initialization
 
@@ -35,21 +35,22 @@
             Product.remove({id: product._id}, _refresh);
         }
 
-        function _create() {
-            Dialog.open('product-details', new Product(), {title: 'Создание продукта'}).then(function (result) {
-                result.item.$save(function () {
-                    _refresh();
+        function _edit(product) {
+            Dialog
+                .open('product-details', product, {title: 'Редактирование продукта'})
+                .then(function (result) {
+                    Product.update({id: result.item._id}, result.item, _refresh);
                 });
-            });
         }
 
-        function _edit(product) {
-            Dialog.open('product-details', product, {title: 'Редактирование продукта'}).then(function (updated) {
-                Product.update({id: updated.item._id}, updated.item, function () {
-                    $log.debug("product updated");
-                    _refresh();
+        function _create() {
+            Dialog
+                .open('product-details', new Product(), {title: 'Создание продукта'})
+                .then(function (result) {
+                    result.item.$save(function (created) {
+                        $scope.model.products.push(created);
+                    });
                 });
-            });
         }
     }
 })(app);

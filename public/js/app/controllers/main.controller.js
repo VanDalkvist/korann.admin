@@ -1,8 +1,9 @@
 (function (app) {
     'use strict';
 
-    MainController.$inject = ['$rootScope', 'userService', '$location', '$state'];
     app.controller('MainController', MainController);
+
+    MainController.$inject = ['$rootScope', 'userService', '$location', '$state'];
 
     function MainController($rootScope, userService, $location, $state) {
         // #region initialization

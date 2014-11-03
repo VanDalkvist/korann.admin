@@ -3,8 +3,9 @@
 
     // #region controller initialization
 
-    LoginController.$inject = ['$rootScope', '$scope', '$log', '$state', 'userService', 'settings'];
     app.controller('LoginController', LoginController);
+
+    LoginController.$inject = ['$rootScope', '$scope', '$log', '$state', 'userService', 'settings'];
 
     function LoginController($rootScope, $scope, $log, $state, userService, settings) {
         // #region model

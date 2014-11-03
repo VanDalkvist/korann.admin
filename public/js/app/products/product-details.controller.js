@@ -3,8 +3,9 @@
 
     // Represents controller for creating and editing product
 
-    ProductDetailsController.$inject = ['$scope', '$modalInstance', 'data', 'Category'];
     app.controller("ProductDetailsController", ProductDetailsController);
+
+    ProductDetailsController.$inject = ['$scope', '$modalInstance', 'data', 'Category'];
 
     function ProductDetailsController($scope, $modalInstance, data, Category) {
 

@@ -1,27 +1,32 @@
 (function () {
     'use strict';
 
-    angular.module('korann.config.http')
-        .config(['$httpProvider', function ($httpProvider) {
-            var interceptor = ['$q', function ($q) {
-                function success(response) {
-                    var contentType = response.headers()['content-type'];
+    angular
+        .module('korann.config.http')
+        .config(_config);
 
-                    if (contentType === "application/json; charset=utf-8")
-                        return response.data;
+    _config.$inject = ['$httpProvider'];
+    
+    function _config($httpProvider) {
+        var interceptor = ['$q', function ($q) {
+            function success(response) {
+                var contentType = response.headers()['content-type'];
 
-                    return response;
-                }
+                if (contentType === "application/json; charset=utf-8")
+                    return response.data;
 
-                function error(response) {
-                    return $q.reject(response.data && response.data.error);
-                }
+                return response;
+            }
 
-                return function (promise) {
-                    return promise.then(success, error);
-                }
-            }];
+            function error(response) {
+                return $q.reject(response.data && response.data.error);
+            }
 
-            $httpProvider.responseInterceptors.push(interceptor);
-        }]);
+            return function (promise) {
+                return promise.then(success, error);
+            }
+        }];
+
+        $httpProvider.responseInterceptors.push(interceptor);
+    }
 })();

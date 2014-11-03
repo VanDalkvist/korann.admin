@@ -1,7 +1,7 @@
 (function () {
     'use strict';
 
-    var required = [
+    var requiredModules = [
         'ngResource',
         'ngCookies',
         'ui.router',
@@ -13,20 +13,23 @@
         'ui.bootstrap',
         'ui.bootstrap.tpls'
     ];
-    var app = angular.module('korann.admin', required);
+    var app = angular.module('korann.admin', requiredModules);
 
     window.app = app;
     window.ng = angular;
 
-    app.run([
-        '$rootScope', '$state', 'userService',
-        function ($rootScope, $state, userService) {
+    app.run(_run);
 
-            userService.current().then(function (result) {
+    _run.$inject = ['$rootScope', 'userService'];
+
+    function _run($rootScope, userService) {
+
+        userService
+            .current()
+            .then(function (result) {
                 if (!result) return;
 
-                $rootScope.user = { username: result.username };
+                $rootScope.user = {username: result.username};
             });
-        }
-    ]);
+    }
 })();

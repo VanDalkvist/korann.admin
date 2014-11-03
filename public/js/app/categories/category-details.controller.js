@@ -1,11 +1,7 @@
-(function (app) {
+(function (module) {
     'use strict';
 
-    /**
-     * represents controller for creating and editing category
-     */
-
-    app.controller("CategoryDetailsController", CategoryDetailsController);
+    module.controller("CategoryDetailsController", CategoryDetailsController);
 
     CategoryDetailsController.$inject = ['$scope', '$modalInstance', 'data', 'Category'];
 

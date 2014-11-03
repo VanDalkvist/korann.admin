@@ -1,8 +1,9 @@
 (function (app) {
     'use strict';
 
-    SidebarController.$inject = ['$scope', '$state'];
     app.controller('SidebarController', SidebarController);
+
+    SidebarController.$inject = ['$scope', '$state'];
 
     function SidebarController($scope, $state) {
         // #region model

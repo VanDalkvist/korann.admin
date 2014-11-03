@@ -1,10 +1,11 @@
 (function (app) {
     'use strict';
-    
-    app.constant('settings', (function () {
-            return {
-                mainState: 'dashboard.panel'
-            };
-        })()
-    );
+
+    app.constant('settings', settings());
+
+    function settings() {
+        return {
+            mainState: 'dashboard.panel'
+        };
+    }
 })(window.app);

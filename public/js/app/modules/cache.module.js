@@ -2,43 +2,45 @@
     'use strict';
 
     module
-        .provider('cache', function () {
+        .provider('cache', cacheProvider);
 
-            // #region initialization
+    function cacheProvider() {
 
-            var storage;
+        // #region initialization
 
-            var storageFactory = {
-                create: function (storageType) {
-                    return window[storageType];
-                }
-            };
+        var storage;
 
-            this.init = function (storageType) {
-                storage = storageFactory.create(storageType);
-            };
-
-            this.$get = function () {
-                return {
-                    get: _get,
-                    put: _put,
-                    remove: _remove
-                };
-            };
-
-            // #region private functions
-
-            function _get(key) {
-                var item = storage.getItem(key);
-                return item ? angular.fromJson(item) : item;
+        var storageFactory = {
+            create: function (storageType) {
+                return window[storageType];
             }
+        };
 
-            function _put(key, value) {
-                storage.setItem(key, angular.toJson(value));
-            }
+        this.init = function (storageType) {
+            storage = storageFactory.create(storageType);
+        };
 
-            function _remove(key) {
-                storage.removeItem(key);
-            }
-        });
+        this.$get = function () {
+            return {
+                get: _get,
+                put: _put,
+                remove: _remove
+            };
+        };
+
+        // #region private functions
+
+        function _get(key) {
+            var item = storage.getItem(key);
+            return item ? angular.fromJson(item) : item;
+        }
+
+        function _put(key, value) {
+            storage.setItem(key, angular.toJson(value));
+        }
+
+        function _remove(key) {
+            storage.removeItem(key);
+        }
+    }
 })(ng.module('korann.cache', []));

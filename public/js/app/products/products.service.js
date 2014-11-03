@@ -1,16 +1,16 @@
 (function () {
     'use strict';
 
-    // products Module
     ng.module('korann.products', ['korann.categories'])
-        .service('Product', [
-            '$resource',
-            function ($resource) {
-                return $resource('/api/product/:id', {
-                    id: '@id'
-                }, {
-                    update: { method: 'PUT' }
-                });
-            }
-        ]);
+        .service('Product', productsResource);
+
+    productsResource.$inject = ['$resource'];
+
+    function productsResource($resource) {
+        return $resource('/api/product/:id', {
+            id: '@id'
+        }, {
+            update: {method: 'PUT'}
+        });
+    }
 })();

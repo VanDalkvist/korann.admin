@@ -1,8 +1,9 @@
 (function (app) {
     'use strict';
 
-    DashboardController.$inject = ['$scope'];
     app.controller('DashboardController', DashboardController);
+
+    DashboardController.$inject = ['$scope'];
 
     function DashboardController($scope) {
 

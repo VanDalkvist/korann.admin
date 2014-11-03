@@ -1,8 +1,6 @@
 (function (app) {
     'use strict';
 
-    // todo: add module
-
     CategoryListController.$inject = ['$scope', '$log', 'Dialog', 'Category'];
     app.controller("CategoryListController", CategoryListController);
 
@@ -37,20 +35,21 @@
         }
 
         function _edit(category) {
-            Dialog.open('category-details', category, {title: 'Редактирование категории'}).then(function (dialogItem) {
-                Category.update({id: dialogItem.item._id}, dialogItem.item, function () {
-                    $log.debug("category updated");
-                    _refresh();
+            Dialog
+                .open('category-details', category, {title: 'Редактирование категории'})
+                .then(function (dialogItem) {
+                    Category.update({id: dialogItem.item._id}, dialogItem.item, _refresh);
                 });
-            });
         }
 
         function _create() {
-            Dialog.open('category-details', new Category(), {title: 'Создание категории'}).then(function (result) {
-                result.item.$save(function (created) {
-                    $scope.model.categories.push(created);
+            Dialog
+                .open('category-details', new Category(), {title: 'Создание категории'})
+                .then(function (result) {
+                    result.item.$save(function (created) {
+                        $scope.model.categories.push(created);
+                    });
                 });
-            });
         }
     }
 })(app);

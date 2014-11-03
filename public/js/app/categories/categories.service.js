@@ -1,15 +1,16 @@
-(function () {
+(function (module) {
     'use strict';
 
-    ng.module('korann.categories', [])
-        .service('Category', [
-            '$resource',
-            function ($resource) {
-                return $resource('/api/category/:id', {
-                    id: '@id'
-                }, {
-                    update: { method: 'PUT' }
-                });
-            }
-        ]);
-})();
+    module.service('Category', categoryResource);
+
+    categoryResource.$inject = ['$resource'];
+
+    function categoryResource($resource) {
+        return $resource('/api/category/:id', {
+            id: '@id'
+        }, {
+            update: {method: 'PUT'}
+        });
+    }
+
+})(app);

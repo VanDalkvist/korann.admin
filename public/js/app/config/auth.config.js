@@ -1,6 +1,8 @@
 (function () {
     'use strict';
 
+    // todo: remove and add http-auth-interceptor
+
     angular.module('korann.config.auth')
         .config(['$httpProvider', function ($httpProvider) {
             /*

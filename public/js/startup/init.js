@@ -7,7 +7,12 @@
     angular.module('korann.config.routes', []);
     angular.module('korann.config.cache', ['korann.cache']);
 
-    angular.module('korann.config', [
-        'korann.config.auth', 'korann.config.http', 'korann.config.routes', 'korann.config.cache'
-    ]);
+    var requiredModules = [
+        'korann.config.auth',
+        'korann.config.http',
+        'korann.config.routes',
+        'korann.config.cache'
+    ];
+    
+    angular.module('korann.config', requiredModules);
 })();
